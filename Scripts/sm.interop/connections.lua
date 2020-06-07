@@ -159,6 +159,9 @@ function connections.register(mod, name, definition)
 end
 
 function connections.registerShape(mod, partClass)
+    assertArg(1, mod, 'table')
+    assertArg(2, partClass, 'table')
+
     sm.interop.server.createIfNecessary()
     sm.interop.mods.assertIsValid(mod)
     -- TODO: Decide whether registerShape must be able to overwrite
@@ -179,10 +182,8 @@ function connections.registerShape(mod, partClass)
 
         -- Edge case: no inputs defined: remove all modded connections
         if partClass.moddedConnectionInput == nil or #partClass.moddedConnectionInput == 0 then
-            print(partClass.interactable, 'FixedUpdate=noInputs')
             partClass.server_onFixedUpdate = onFixedUpdateNoInputs
         else
-            print(partClass.interactable, 'FixedUpdate=ModOutputs')
             partClass.server_onFixedUpdate = onFixedUpdate
         end
     end
