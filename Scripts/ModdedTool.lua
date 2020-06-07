@@ -114,9 +114,9 @@ function ModdedTool.client_onReload(self)
     end
 end
 
-function ModdedTool.client_onUpdate(self)
+function ModdedTool.client_onUpdate(self, dt)
     for _,instance in ipairs(self.updatingInstances) do
-        logpcall(instance.client_onUpdate, instance)
+        logpcall(instance.client_onUpdate, instance, dt)
     end
 end
 
