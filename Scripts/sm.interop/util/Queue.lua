@@ -31,11 +31,11 @@ function Queue.new()
     }
 end
 
-function Queue:push(value)
+function Queue.push(queue, value)
     return queue:push(value)
 end
 
-function Queue:pop()
+function Queue.pop(queue)
     return queue:pop()
 end
 
