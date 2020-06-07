@@ -1,0 +1,6 @@
+{
+    "e74ff990-adac-434f-9967-bf9833d0bd69": {
+        "title": "Modded Tool Loader",
+        "description": "This part must be placed in a hotbar, so that mods that use the sm.interop coremod can load custom tools."
+    }
+}

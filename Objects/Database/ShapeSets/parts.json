@@ -1,0 +1,76 @@
+{
+    "partList" : [
+        {
+            "uuid": "cf73bdd4-caab-440d-b631-2cac12c17904",
+            "renderable": {
+                "lodList": [
+                    {
+                        "subMeshList": [
+                            {
+                                "textureList": [
+                                    "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_beamslarge_dif.tga",
+                                    "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_beamslarge_asg.tga",
+                                    "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_beamslarge_nor.tga"
+                                ],
+                                "material": "DifAsgNor"
+                            }
+                        ],
+                        "mesh": "$SURVIVAL_DATA/Objects/Mesh/warehouse/obj_warehouse_beambig.fbx"
+                    }
+                ]
+            },
+            "rotationSet": "PropY",
+            "scripted": {
+                "filename": "$MOD_DATA/Scripts/Server.lua",
+                "classname": "Server"
+            },
+            "color": "8f8f8f",
+            "box": { "x": 1, "y": 1, "z": 1 },
+            "density": 500.0,
+            "physicsMaterial": "Plastic",
+            "restrictions": {
+                "convertibleToDynamic": false,
+                "erasable": false,
+				"liftable": false,
+				"buildable": false,
+				"paintable": false
+            }
+        },
+        {
+            "uuid": "2766e836-33ab-457d-970c-e9fe62820ade",
+            "renderable": {
+                "lodList": [
+                    {
+                        "subMeshList": [
+                            {
+                                "textureList": [
+                                    "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_beamslarge_dif.tga",
+                                    "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_beamslarge_asg.tga",
+                                    "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_beamslarge_nor.tga"
+                                ],
+                                "material": "DifAsgNor"
+                            }
+                        ],
+                        "mesh": "$SURVIVAL_DATA/Objects/Mesh/warehouse/obj_warehouse_beambig.fbx"
+                    }
+                ]
+            },
+            "rotationSet": "PropY",
+            "scripted": {
+                "filename": "$MOD_DATA/Scripts/StartupRunner.lua",
+                "classname": "StartupRunner"
+            },
+            "color": "8f8f8f",
+            "box": { "x": 1, "y": 1, "z": 1 },
+            "density": 500.0,
+            "physicsMaterial": "Plastic",
+            "restrictions": {
+                "convertibleToDynamic": false,
+                "erasable": false,
+ 				"liftable": false,
+ 				"buildable": false,
+	            "paintable": false
+            }
+        }
+    ]
+}

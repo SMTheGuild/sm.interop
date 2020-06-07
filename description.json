@@ -1,0 +1,7 @@
+{
+   "description" : "[b]Installation instructions:[/b]\nNavigate to Your Steam installation directory -> SteamApps\\workshop\\[gameId]\\[modId] -> Install.bat",
+   "localId" : "e94ac99f-393e-4816-abe3-353435a1edf4",
+   "name" : "sm.interop",
+   "type" : "Blocks and Parts",
+   "version" : 0
+}

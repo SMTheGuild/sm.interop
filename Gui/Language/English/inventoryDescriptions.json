@@ -1,0 +1,10 @@
+{
+    "cf73bdd4-caab-440d-b631-2cac12c17904": {
+        "title": "sm.interop Startup Server",
+        "description": "Auxiliary part"
+    },
+    "2766e836-33ab-457d-970c-e9fe62820ade": {
+        "title": "sm.interop Startup Handler",
+        "description": "Auxiliary part"
+    }
+}
