@@ -1,0 +1,5 @@
+.git
+Gamefilemod\src
+.gitattributes
+Build.bat
+buildexclude
