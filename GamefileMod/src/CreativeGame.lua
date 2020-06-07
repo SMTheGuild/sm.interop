@@ -32,7 +32,7 @@ function CreativeGame.cl_onInteropCommand(self, params)
         return
     end
     if sm.interop == nil then
-        sm.gui.chatMessage('#ff0000Error: #ffffffMod "sm.interop" is missing')
+        sm.gui.chatMessage('#ff0000Error: #ffffffMod "sm.interop" is missing, or no part using the coremod has been placed in the world yet.')
         return
     end
     if not params[2] then
