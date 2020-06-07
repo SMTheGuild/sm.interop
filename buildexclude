@@ -3,3 +3,6 @@ Gamefilemod\src
 .gitattributes
 Build.bat
 buildexclude
+Workshop description.bb
+description_build.json
+description.json
