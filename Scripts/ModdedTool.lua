@@ -131,9 +131,9 @@ end
 function ModdedTool.client_onEquippedUpdate(self, ...)
     local instance = self.equipped
     if instance ~= nil and type(instance.client_onEquippedUpdate) == 'function' then
-        local success, value = pcall(instance.client_onEquippedUpdate, instance, ...)
+        local success, value1, value2 = pcall(instance.client_onEquippedUpdate, instance, ...)
         if success then
-            return value
+            return value1, value2
         else
             sm.log.error(value)
         end
