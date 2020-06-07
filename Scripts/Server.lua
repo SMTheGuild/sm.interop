@@ -22,8 +22,6 @@ function Server.server_onFixedUpdate(self)
     -- If the part is not about to be deleted because it is invalid
     if self.destroyTimer == -1 then
         if server.isValid(self.shape) then
-            scheduler.tick()
-
             if self.startupChanged then
                 self.storage:save(startup.getStartupScripts())
                 self.startupChanged = false
@@ -32,6 +30,8 @@ function Server.server_onFixedUpdate(self)
                 startup.startRunOldScripts()
                 self.startupScriptsRun = true
             end
+
+            scheduler.tick()
         else
             -- Destroy this part if it doesn't belong here
             server.createNewShape()

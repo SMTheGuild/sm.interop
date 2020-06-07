@@ -159,7 +159,7 @@ function startup.runOldScripts()
                 logpcall(runScript, v.fileName, v.mod)
                 scriptRan[k] = true
             else
-                sm.log.warning('Did not load startup script "'..k..'", mod\'s identifying part not found')
+                print('[sm.interop] Did not load startup script "'..k..'", mod\'s identifying part not found')
             end
         end
     end
