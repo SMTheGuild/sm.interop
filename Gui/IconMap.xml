@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Resource" version="1.1">
+    <Resource type="ResourceImageSet" name="ItemIconsSet0">
+        <Group name="ItemIcons" texture="IconMap.png" size="74 74">
+            <Index name="Empty">
+                <Frame point="0 0"/>
+            </Index>
+            <Index name="cf73bdd4-caab-440d-b631-2cac12c17904">
+                <Frame point="0 0"/>
+            </Index>
+            <Index name="2766e836-33ab-457d-970c-e9fe62820ade">
+                <Frame point="74 0"/>
+            </Index>
+        </Group>
+    </Resource>
+</MyGUI>

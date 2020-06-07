@@ -8,14 +8,14 @@
                         "subMeshList": [
                             {
                                 "textureList": [
-                                    "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_beamslarge_dif.tga",
-                                    "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_beamslarge_asg.tga",
-                                    "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_beamslarge_nor.tga"
+                                    "$MOD_DATA/Objects/Textures/internal_part.png",
+                                    "$GAME_DATA/Textures/empty.tga",
+                                    "$GAME_DATA/Textures/nonor_nor.tga"
                                 ],
                                 "material": "DifAsgNor"
                             }
                         ],
-                        "mesh": "$SURVIVAL_DATA/Objects/Mesh/warehouse/obj_warehouse_beambig.fbx"
+                        "mesh": "$MOD_DATA/Objects/Mesh/internal_part.obj"
                     }
                 ]
             },
@@ -44,14 +44,14 @@
                         "subMeshList": [
                             {
                                 "textureList": [
-                                    "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_beamslarge_dif.tga",
-                                    "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_beamslarge_asg.tga",
-                                    "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_beamslarge_nor.tga"
+                                    "$MOD_DATA/Objects/Textures/internal_part.png",
+                                    "$GAME_DATA/Textures/empty.tga",
+                                    "$GAME_DATA/Textures/nonor_nor.tga"
                                 ],
                                 "material": "DifAsgNor"
                             }
                         ],
-                        "mesh": "$SURVIVAL_DATA/Objects/Mesh/warehouse/obj_warehouse_beambig.fbx"
+                        "mesh": "$MOD_DATA/Objects/Mesh/internal_part.obj"
                     }
                 ]
             },
