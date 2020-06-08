@@ -97,6 +97,10 @@ function ModdedTool.client_onEquip(self)
 end
 
 function ModdedTool.client_onUnequip(self)
+    local instance = self.equipped
+    if instance and type(instance.client_onUnequip) == 'function' then
+        logpcall(instance.client_onUnequip, instance)
+    end
     self.equipped = nil
 end
 
