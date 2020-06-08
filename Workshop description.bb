@@ -29,11 +29,14 @@ To install the workshop part, you only have to click the 'Subscribe' button and 
 
 Installing the game file part is a bit more complicated. Go to your game library and right click on Scrap Mechanic.
 Select Manage -> Browse local files. This opens the [u]steamapps\common\Scrap Mechanic[/u] folder. Navigate back to the steamapps folder,
-then open [u]workshop\387990\2123222134[/u]. Make sure your game is closed, and then double-click on Install.bat. Now open Scrap Mechanic again.
+then open [u]workshop\content\387990\2123222134[/u]. Make sure your game is closed, and then double-click on Install.bat. Now open Scrap Mechanic again.
 A video will soon be made that explains how to install the game.
 
 [h1]Using [i]sm.interop[/i] as mod developer[/h1]
 [olist]
-  [*] Clone the [url=https://github.com/smtheguild/sm.interop-example]example project[/url] from GitHub.
+  [*] Read through the [url=https://github.com/smtheguild/sm.interop-example]example project[/url] from GitHub.
   [*] Read the [u]API documentation[/u] (yet to be released)
 [/olist]
+
+[h1]Who is The Guild?[/h1]
+The Guild is a cooperation between a number of modders. Currently, The Guild consists of: Alstrak, BlueFlame, Brent Batch, DasEtwas, DJ, Fusspawn, Mini, MJM, Sheggy, shinevision, ShrooToo, TechnologicNick, Thumbpick, wingcomstriker405 and Xesau.
