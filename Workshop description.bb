@@ -24,7 +24,9 @@ Game file mods that change tools or scripts may not be compatible with sm.intero
 [h1]Installing [i]sm.interop[/i] as user[/h1]
 To install the workshop part, you only have to click the 'Subscribe' button and restart your game.
 
-Installing the game file part is a bit more complicated. Go to your game library and right click on Scrap Mechanic. Select Manage -> Browse local files. This opens the [u]steamapps\common\Scrap Mechanic[/u] folder. Navigate back to the steamapps folder, then open [u]workshop\content\387990\2123222134[/u]. Make sure your game is closed, and then double-click on Install.bat. Now open Scrap Mechanic again. A video will soon be made that explains how to install the game.
+Installing the game file part is a bit more complicated. Go to your game library and right click on Scrap Mechanic. Select Manage -> Browse local files. This opens the [u]steamapps\common\Scrap Mechanic[/u] folder. Navigate back to the steamapps folder, then open [u]workshop\content\387990\2123222134[/u]. Make sure your game is closed, and then double-click on Install.bat. Now open Scrap Mechanic again.
+
+Or watch the video tutorial: https://youtu.be/LxCweEwQSlE
 
 [h1]Using [i]sm.interop[/i] as mod developer[/h1]
 [olist]
