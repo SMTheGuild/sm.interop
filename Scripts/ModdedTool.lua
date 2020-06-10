@@ -139,7 +139,7 @@ function ModdedTool.client_onEquippedUpdate(self, ...)
         if success then
             return value1, value2
         else
-            sm.log.error(value)
+            sm.log.error(value1)
         end
     end
     return false, false
