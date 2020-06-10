@@ -7,6 +7,9 @@ local events = {}
 local listeners = {}
 local instanceToEventName = {}
 
+local eventId = 1
+local removedEventIds = {}
+
 local getInstanceEventsSet = function(instance)
     local set = instanceToEventName[instance]
     if set == nil then
@@ -29,7 +32,9 @@ events.listen = function(event, listenerFunction, priority, listenerClass)
     event = event:lower()
 
     -- Register listener
-    local listener = { listenerClass, listenerFunction }
+    local thisEventId = eventId
+    eventId = eventId + 1
+    local listener = { listenerClass, listenerFunction, thisEventId }
     if not listeners[event] then
         listeners[event] = { listener }
     else
@@ -39,6 +44,11 @@ events.listen = function(event, listenerFunction, priority, listenerClass)
             table.insert(listeners[event], listener)
         end
     end
+    return thisEventId
+end
+
+events.remove = function(eventId)
+    removedEventIds[eventId] = true
 end
 
 ---
@@ -49,23 +59,21 @@ events.emit = function(event, data)
     event = event:lower()
 
     local handlers = listeners[event] or {}
-    local errors = {}
-    local errorIndex = 1
     for i=1,#handlers do
         local handler = handlers[i]
-        local result, error
-        if handler[1] == nil then
-            result, error = pcall(handler[2], data)
+        if not removedEventIds[handler[3]] then
+            local result, error
+            if handler[1] == nil then
+                result, error = pcall(handler[2], data)
+            else
+                result, error = pcall(handler[2], handler[1], data)
+            end
+            if not result then
+                sm.log.error(error)
+            end
         else
-            result, error = pcall(handler[2], handler[1], data)
+            handlers[i] = nil
         end
-        if not result then
-            errors[errorIndex] = error
-            errorIndex = errorIndex + 1
-        end
-    end
-    if errorIndex ~= 1 then
-        print(errors, 'eee')
     end
 end
 
