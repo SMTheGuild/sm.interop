@@ -13,21 +13,19 @@ local toolsState = {
 -- @public
 local tools = {}
 
-function tools.register(mod, name, fileName, className)
+function tools.register(mod, name, fileName)
     assertArg(1, mod, 'table')
     assertArg(2, name, 'string')
     assertArg(3, fileName, 'string')
-    assertArg(4, className, 'string')
 
     mods.assertIsValid(mod)
     local fullName = util.getFullName(mod, name):lower()
     fileName = '$CONTENT_'..tostring(mod:getUuid())..'/'..fileName
 
-    -- FIXME !! Access leak to tools and toolShapes
     toolsState.creatingToolClass = nil
     dofile(fileName)
     local tool = toolsState.creatingToolClass
-    assert(tool ~= nil, 'Class ' .. className .. ' was not created using sm.interop.tools.createClass([parent]) in ' .. fileName)
+    assert(tool ~= nil, 'Class was not created using sm.interop.tools.createClass([parent]) in ' .. fileName)
     toolRegistry[fullName] = tool
     print('Registered tool under name "'.. fullName..'"')
 end

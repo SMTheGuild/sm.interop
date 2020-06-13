@@ -50,25 +50,46 @@ function ModdedTool.getInstanceFor(self, uuid)
         -- If we can find a class for this tool, get an instance and copy functions into self
         local instance = sm.interop.tools.getToolClass(uuid)
         if instance then
-            instance.tool = self.tool
-
+            -- Add self.tool and self.network
             -- Make sure network calls are routed to the appropriate instance
+            instance.tool = self.tool
             instance.network = wrapNetwork(self.network, uuid)
 
             self.instances[uuidString] = instance
 
-            -- client_onUpdate
-            if type(instance.client_onUpdate) == 'function' then
-                self.updatingInstances[#self.updatingInstances + 1] = instance
-            end
-
-            -- Call client_onCreate if it exists
-            if type(instance.client_onCreate) == 'function' then
-                logpcall(instance.client_onCreate, instance)
+            if sm.isServerMode() then
+                self.server_initializeTool(uuid)
+                self.network:sendToClients('client_initializeTool', uuid)
+            else
+                self:client_initializeTool(uuid)
+                self.network:sendToServer('server_initializeTool', uuid)
             end
         end
     end
     return self.instances[uuidString]
+end
+
+function ModdedTool.client_initializeTool(self, uuid)
+    sm.gui.chatMessage('client_initializeTool')
+    local instance = self:getInstanceFor(uuid)
+
+    -- client_onUpdate
+    if type(instance.client_onUpdate) == 'function' then
+        self.updatingInstances[#self.updatingInstances + 1] = instance
+    end
+
+    -- Call client_onCreate if it exists
+    if type(instance.client_onCreate) == 'function' then
+        logpcall(instance.client_onCreate, instance)
+    end
+end
+
+function ModdedTool.server_initializeTool(self, uuid)
+    print('server_initializeTool')
+    local instance = self:getInstanceFor(uuid)
+    if type(instance.server_onCreate) == 'function' then
+        logpcall(instance.server_onCreate, instance)
+    end
 end
 
 function ModdedTool.client_onEquip(self)
@@ -155,10 +176,3 @@ end
 
 -- Same thing
 ModdedTool.server_network = ModdedTool.client_network
-
-function ModdedTool.server_createInstance(self, uuid)
-    local instance = self:getInstanceFor(uuid)
-    if type(instance.server_onCreate) == 'function' then
-        logpcall(instance.server_onCreate, instance)
-    end
-end
