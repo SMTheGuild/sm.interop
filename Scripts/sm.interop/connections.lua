@@ -259,6 +259,39 @@ function connections.getParentsByType(interactable, interactableType)
     return parents
 end
 
+function connections.getChildrenByType(interactable, interactableType)
+    assertArgInteractable(1, interactable)
+    assertArg(2, interactableType, 'string')
+
+    interactableType = interactableType:lower()
+    interactable = getInteractable(interactable)
+
+    -- TODO Decide whether getParentsByType() must also be available for non-scripted objects
+    assert(interactable:getType() == 'scripted', 'This interactable is not scripted')
+
+    local part = getPartClass(interactable)
+    assert(part ~= nil, 'Could not find sm.interop data for this interactable')
+    assert(type(part.moddedConnectionOutput) == 'table' and util.contains(part.moddedConnectionOutput, type) ~= nil, 'Type "'.. interactableType ..'" is not in moddedConnectionOutput for this interactable')
+
+    local children = {}
+    for k,v in ipairs(part.interactable:getChildren()) do
+        -- If <type> is a vanilla type (logic, engine, seat, scripted, w/e)
+        -- use v:getType() check
+        if v:getType() == interactableType then
+            parents[#parents + 1] = v
+
+        -- If it is a custom type, get part class moddedConnectionOutput and
+        -- use that for check
+        else
+            local p = getPartTypeInterface(getPartClass(v), interactableType)
+            if p ~= nil then
+                children[#children + 1] = p
+            end
+        end
+    end
+    return children
+end
+
 function connections.getSingleParentByType(interactable, interactableType)
     assertArgInteractable(1, interactable)
     assertArg(2, interactableType, 'string')
