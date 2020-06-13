@@ -31,7 +31,7 @@ Or watch the video tutorial: https://youtu.be/LxCweEwQSlE
 [h1]Using [i]sm.interop[/i] as mod developer[/h1]
 [olist]
   [*] Read through the [url=https://github.com/smtheguild/sm.interop-example]example project[/url] from GitHub.
-  [*] Read the [u]API documentation[/u] (yet to be released)
+  [*] Read the [url=https://docs.google.com/document/d/1gK8PswBa0W6QCNH70BiBQT3ThaEbqlbVslszn8Dex-Y/edit]API documentation[/url] (still Work In Progress)
 [/olist]
 
 [h1]Who is The Guild?[/h1]
