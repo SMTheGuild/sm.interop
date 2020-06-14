@@ -1,8 +1,7 @@
 sm.interop.util = {}
 
 function sm.interop.util.getGamemode()
-    local challengeMode = pcall(sm.challenge.start)
-    if challengeMode then
+    if sm.event.sendToGame('server_loadLevel', {}) then
         return 'challenge'
     end
 
