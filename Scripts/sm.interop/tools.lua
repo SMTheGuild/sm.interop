@@ -7,33 +7,58 @@ local mods = sm.interop.mods
 local toolRegistry = {}
 local toolShapes = {}
 local toolsState = {
-    creatingToolClass = nil
+    createToolClasses = {},
+    createToolClassVars = {},
+    currentModNamespace = nil
 }
 
 -- @public
 local tools = {}
 
-function tools.register(mod, name, fileName)
+function tools.register(mod, name, fileName, className)
     assertArg(1, mod, 'table')
     assertArg(2, name, 'string')
     assertArg(3, fileName, 'string')
+    assertArg(4, className, 'string')
 
     mods.assertIsValid(mod)
     local fullName = util.getFullName(mod, name):lower()
     fileName = '$CONTENT_'..tostring(mod:getUuid())..'/'..fileName
 
-    toolsState.creatingToolClass = nil
+    local ns = mod:getNamespace():lower()
+    toolsState.currentModNamespace = ns
+    local createdClasses = toolsState.createToolClasses[ns]
+    if createdClasses == nil then
+        createdClasses = {}
+        toolsState.createToolClasses[ns] = createdClasses
+    end
+
     dofile(fileName)
-    local tool = toolsState.creatingToolClass
+    local tool = createdClasses[className]
     assert(tool ~= nil, 'Class was not created using sm.interop.tools.createClass([parent]) in ' .. fileName)
+
     toolRegistry[fullName] = tool
     print('Registered tool under name "'.. fullName..'"')
 end
 
-function tools.createClass(parent)
-    local cls = class(parent)
-    toolsState.creatingToolClass = cls
-    return cls
+function tools.createClass(name, parent)
+    assertArg(1, name, 'string')
+    if parent ~= nil then
+        assertArg(2, parent, 'table')
+    end
+
+    local createdClasses = toolsState.createToolClasses[toolsState.currentModNamespace]
+    if createdClasses == nil then
+        createdClasses = {}
+        toolsState.createToolClasses[toolsState.currentModNamespace] = createdClasses
+    end
+
+    local toolClass = createdClasses[name]
+    if toolClass == nil then
+        toolClass = class(parent)
+        createdClasses[name] = toolClass
+    end
+    return toolClass
 end
 
 function tools.attach(name, shapeUuid, data)
@@ -58,9 +83,20 @@ function tools.getToolClass(shapeUuid)
     if toolInfo == nil or not toolRegistry[toolInfo[1]] then
         return nil
     end
-    local tool = class(toolRegistry[toolInfo[1]])
-    tool.data = toolInfo[1]
+    local tool = toolRegistry[toolInfo[1]]
+    tool.data = toolInfo[2]
     return tool
+end
+
+function tools.getToolData(shapeUuid)
+    assertArg(1, shapeUuid, 'Uuid')
+
+    local uuidString = tostring(shapeUuid)
+    local toolInfo = toolShapes[uuidString]
+    if toolInfo == nil or not toolRegistry[toolInfo[1]] then
+        return nil
+    end
+    return toolInfo[2]
 end
 
 -- @export
