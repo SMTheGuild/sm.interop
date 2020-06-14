@@ -35,7 +35,7 @@ function tools.register(mod, name, fileName, className)
 
     dofile(fileName)
     local tool = createdClasses[className]
-    assert(tool ~= nil, 'Class was not created using sm.interop.tools.createClass([parent]) in ' .. fileName)
+    assert(tool ~= nil, 'Class was not created using sm.interop.tools.createClass(className, [parent]) in ' .. fileName)
 
     toolRegistry[fullName] = tool
     print('Registered tool under name "'.. fullName..'"')

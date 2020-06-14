@@ -6,7 +6,7 @@ tasklist /FI "IMAGENAME eq ScrapMechanic.exe" 2>NUL | find /I /N "ScrapMechanic.
 if "%ERRORLEVEL%"=="0" (
     echo Please close Scrap Mechanic before you install sm.interop
     pause
-    exit
+    GOTO :EOF
 )
 
 ECHO Finding Steam installation path
@@ -16,8 +16,8 @@ SET SteamPath=%SteamPath64%%SteamPath32%
 SET SteamPath=%SteamPath:\uninstall.exe=%
 
 IF NOT EXIST %SteamPath% (
-    ECHO Steam is not installed on this system
-    EXIT
+    ECHO Could not find the Steam installation path
+    GOTO :enter
 )
 
 ECHO Found Steam folder at %SteamPath%
@@ -29,7 +29,7 @@ ECHO.
 ECHO Could not find Scrap Mechanic folder. Please enter the Scrap Mechanic installation folder manually.
 ECHO To exit this script, do not enter anything and press enter.
 set /p ScrapMechanicPath="Scrap Mechanic folder: "
-IF "%ScrapMechanicPath%" == "" EXIT
+IF "%ScrapMechanicPath%" == "" goto :EOF
 IF NOT EXIST "%ScrapMechanicPath%" goto :enter
 
 :found
@@ -52,10 +52,12 @@ IF UseLatest == "y" (
     SET VersionPath=v0.4.5
     GOTO :install
 )
-EXIT
+goto :EOF
 
 :install
 ECHO Installing sm.interop game files for version %VersionPath%
 xcopy "GamefileMod\%VersionPath%" "%ScrapMechanicPath%" /y /s
 ECHO Game files installed!
 PAUSE
+
+:EOF
