@@ -1,3 +1,6 @@
++ Add at the start
+sm.interopGamefileModVersion = 1
+
 +
 + Add at the bottom of client_onCreate
 +

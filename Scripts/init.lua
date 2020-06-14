@@ -12,9 +12,17 @@ if not modPartsLoaded then
 end
 
 sm.interop = {
-    version = '0.1.0-alpha',
-    connectionType = 4096
+    version = '0.1.2',
+    connectionType = 4096,
+    gamefileModVersion = 1
 }
+
+if not sm.interopGamefileModVersion or sm.interopGamefileModVersion < sm.interop.gamefileModVersion then
+    if not sm.isServerMode() then
+        sm.gui.chatMessage('#ff0000Error: #ffffffYou need to Update the Game file part of the sm.interop mod. Visit the Steam Workshop page for sm.interop to read about how to do this.')
+    end
+    sm.log.error('You need to Update the Game file part of the sm.interop mod. Visit the Steam Workshop page for sm.interop to read about how to do this.')
+end
 
 -- Load all files
 dofile 'sm.interop/util.lua'

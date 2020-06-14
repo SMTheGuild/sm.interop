@@ -1,4 +1,6 @@
 
+sm.interopGamefileModVersion = 1
+
 CreativeGame = class( nil )
 CreativeGame.enableLimitedInventory = false
 CreativeGame.enableRestrictions = false
