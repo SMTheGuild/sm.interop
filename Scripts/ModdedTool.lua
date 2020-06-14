@@ -41,6 +41,7 @@ ModdedTool = class(nil)
 function ModdedTool.client_onCreate(self)
     self.equipped = nil
     self.instances = {}
+    self.instanceData = {}
     self.updatingInstances = {}
 end
 
@@ -70,7 +71,6 @@ function ModdedTool.getInstanceFor(self, uuid)
 end
 
 function ModdedTool.client_initializeTool(self, uuid)
-    sm.gui.chatMessage('client_initializeTool')
     local instance = self:getInstanceFor(uuid)
 
     -- client_onUpdate
@@ -85,7 +85,6 @@ function ModdedTool.client_initializeTool(self, uuid)
 end
 
 function ModdedTool.server_initializeTool(self, uuid)
-    print('server_initializeTool')
     local instance = self:getInstanceFor(uuid)
     if type(instance.server_onCreate) == 'function' then
         logpcall(instance.server_onCreate, instance)
@@ -106,6 +105,8 @@ function ModdedTool.client_onEquip(self)
         if item ~= nil then
             self.equipped = self:getInstanceFor(item)
             if self.equipped ~= nil then
+                self.equipped.data = sm.interop.tools.getToolData(item)
+                
                 -- Call client_onEquip if it exists
                 if type(self.equipped.client_onEquip) == 'function' then
                     logpcall(self.equipped.client_onEquip, self.equipped)
@@ -119,8 +120,11 @@ end
 
 function ModdedTool.client_onUnequip(self)
     local instance = self.equipped
-    if instance and type(instance.client_onUnequip) == 'function' then
-        logpcall(instance.client_onUnequip, instance)
+    if instance ~= nil then
+        instance.data = nil
+        if type(instance.client_onUnequip) == 'function' then
+            logpcall(instance.client_onUnequip, instance)
+        end
     end
     self.equipped = nil
 end
@@ -172,6 +176,12 @@ function ModdedTool.client_network(self, data)
     local mtd = instance[data.name]
     assert(type(mtd) == 'function', 'Callback ' .. data.name ..  ' does not exist in ' .. sm.shape.getShapeTitle(uuid) ..'\'s tool class')
     logpcall(mtd, instance)
+end
+
+function ModdedTool.server_onCreate(self)
+    if sm.interop then
+        sm.interop.server.createIfNecessary()
+    end
 end
 
 -- Same thing
