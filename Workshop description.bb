@@ -28,6 +28,9 @@ Installing the game file part is a bit more complicated. Go to your game library
 
 Or watch the video tutorial: https://youtu.be/LxCweEwQSlE
 
+[h1]Updating [i]sm.interop[/i][/h1]
+To update the mod, you follow the same steps as when installing. But now, you click Update.bat. If that does not work, try just clicking Install.bat again.
+
 [h1]Using [i]sm.interop[/i] as mod developer[/h1]
 [olist]
   [*] Read through the [url=https://github.com/smtheguild/sm.interop-example]example project[/url] from GitHub.
