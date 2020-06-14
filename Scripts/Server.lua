@@ -15,6 +15,8 @@ function Server.server_onCreate(self)
     local startupScripts = self.storage:load()
     if startupScripts ~= nil then
         startup.restoreStartupScripts(startupScripts)
+    else
+        self:interop_notifyOfStartupChange()
     end
 end
 
@@ -23,10 +25,9 @@ function Server.server_onFixedUpdate(self)
     if self.destroyTimer == -1 then
         if server.isValid(self.shape) then
             if self.startupChanged then
-                self.storage:save(startup.getStartupScripts())
-                self.startupChanged = false
+                self:server_saveStartupScripts()
             elseif not self.startupScriptsRun then
-                self.storage:save(startup.getStartupScripts())
+                self:server_saveStartupScripts()
                 startup.startRunOldScripts()
                 self.startupScriptsRun = true
             end
@@ -44,6 +45,11 @@ function Server.server_onFixedUpdate(self)
             self.destroyTimer = self.destroyTimer - 1
         end
     end
+end
+
+function Server.server_saveStartupScripts(self)
+    self.storage:save(startup.getStartupScripts())
+    self.startupChanged = false
 end
 
 function Server.interop_notifyOfStartupChange(self)

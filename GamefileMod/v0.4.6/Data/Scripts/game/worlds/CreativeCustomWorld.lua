@@ -8,6 +8,14 @@ CreativeCustomWorld.enableCreations = false
 CreativeCustomWorld.enableNodes = false
 CreativeCustomWorld.enableCellScripts = false
 
+function CreativeCustomWorld.server_onCreate(self)
+    local uuid = sm.uuid.new('cf73bdd4-caab-440d-b631-2cac12c17904')
+    local modPartsLoaded = pcall(sm.item.getShapeSize, uuid)
+    if modPartsLoaded then
+        sm.shape.createPart(uuid, sm.vec3.new(0, 0, -32), sm.quat.identity(), false, false)
+    end
+end
+
 function CreativeCustomWorld.server_onProjectile(self, hitPos, hitTime, hitVelocity, projectileName, attacker, damage, userData)
     if sm.interop then
         sm.interop.events.emit('scrapmechanic:worldHitByProjectile', {
