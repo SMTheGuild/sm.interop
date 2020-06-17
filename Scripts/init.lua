@@ -33,6 +33,7 @@ dofile 'sm.interop/connections.lua'
 dofile 'sm.interop/commands.lua';
 dofile 'sm.interop/tools.lua'
 dofile 'sm.interop/server.lua'
+dofile 'sm.interop/services.lua'
 dofile 'sm.interop/startup.lua'
 dofile 'sm.interop/scheduler.lua'
 
