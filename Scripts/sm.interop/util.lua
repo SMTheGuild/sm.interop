@@ -72,6 +72,13 @@ function sm.interop.util.getFullName(mod, name)
     return (mod:getNamespace() .. ':' .. name):lower()
 end
 
+function sm.interop.util.logpcall(...)
+    local result, error = pcall(...)
+    if not result then
+        sm.log.error(error)
+    end
+end
+
 dofile 'util/bits.lua'
 dofile 'util/color.lua'
 dofile 'util/Queue.lua'

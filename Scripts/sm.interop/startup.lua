@@ -1,8 +1,8 @@
-
 -- @import
 local getFullName = sm.interop.util.getFullName
 local mods = sm.interop.mods
 local server = sm.interop.server
+local logpcall = sm.interop.util.logpcall
 local assertArg = sm.interop.util.assertArgumentType
 
 -- @private
@@ -46,13 +46,6 @@ local createTempMod = function(namespace, name, author, uuid, version, identifyi
             return pcall(sm.item.getShapeSize, identifyingPartUuid)
         end
     }
-end
-
-local function logpcall(fnc, ...)
-    local result, error = pcall(fnc, ...)
-    if not result then
-        sm.log.error(error)
-    end
 end
 
 local function runScript(fullName, fileName, mod)

@@ -1,8 +1,10 @@
 -- @import
 local assertArg = sm.interop.util.assertArgumentType
+local logpcall = sm.interop.util.logpcall
 
 -- @private
 local registry = {}
+local awaiting = {}
 
 -- @public
 local services = {}
@@ -25,6 +27,15 @@ function services.register(mod, name, service)
     assert(registry[id] == nil, 'A service with this name is already registered')
 
     registry[id] = service
+
+    -- Run functions that called services.use(service, fnc) before the service
+    -- was registered
+    if awaiting[name] then
+        for i,v in ipairs(awaiting[name]) do
+            logpcall(v, service)
+        end
+    end
+
     return id
 end
 
@@ -36,6 +47,16 @@ function services.get(name)
 
     name = name:lower()
     return registry[name]
+end
+
+function services.use(name, fnc)
+    if registry[name] then
+        fnc(registry[name])
+    else
+        local t = awaiting[name] or {}
+        awaiting[name] = t
+        t[#t + 1] = fnc
+    end
 end
 
 -- @export
