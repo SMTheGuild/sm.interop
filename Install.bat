@@ -28,7 +28,8 @@ IF EXIST "%ScrapMechanicPath%" goto :found
 ECHO.
 ECHO Could not find Scrap Mechanic folder. Please enter the Scrap Mechanic installation folder manually.
 ECHO To exit this script, do not enter anything and press enter.
-set /p ScrapMechanicPath="Scrap Mechanic folder: "
+SET /p ScrapMechanicPath="Scrap Mechanic folder: "
+set ScrapMechanicPath=%ScrapMechanicPath:"=%
 IF "%ScrapMechanicPath%" == "" goto :EOF
 IF NOT EXIST "%ScrapMechanicPath%" goto :enter
 
