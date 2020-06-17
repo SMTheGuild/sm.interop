@@ -9,19 +9,37 @@ if "%ERRORLEVEL%"=="0" (
     GOTO :EOF
 )
 
-ECHO Finding Steam installation path
-(for /f "usebackq tokens=1,2,*" %%a in (`reg query "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Steam" /v UninstallString`) do set SteamPath32=%%c)>nul 2>&1
-(for /f "usebackq tokens=1,2,*" %%a in (`reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam" /v UninstallString`) do set SteamPath64=%%c)>nul 2>&1
-SET SteamPath=%SteamPath64%%SteamPath32%
-SET SteamPath=%SteamPath:\uninstall.exe=%
+REM Try Common paths first
+SET ScrapMechanicPath=C:\Program Files\Steam\steamapps\common\Scrap Mechanic
+IF EXIST "%ScrapMechanicPath%" GOTO :found
+SET ScrapMechanicPath=C:\Program Files (x86)\Steam\steamapps\common\Scrap Mechanic
+IF EXIST "%ScrapMechanicPath%" GOTO :found
+SET ScrapMechanicPath=D:\Steam\steamapps\common\Scrap Mechanic
+IF EXIST "%ScrapMechanicPath%" GOTO :found
+SET ScrapMechanicPath=B:\Steam\steamapps\common\Scrap Mechanic
+IF EXIST "%ScrapMechanicPath%" GOTO :found
 
-IF NOT EXIST %SteamPath% (
+REM Try by finding the Steam installation path
+FOR /f "delims=" %%a in ('reg query HKCU\Software\Valve\Steam /v SteamPath') DO SET SteamPath=%%a
+SET SteamPath=%SteamPath:~26%
+SET SteamPath=%SteamPath: =%
+IF NOT EXIST "%SteamPath%" (
+    FOR /f "delims=" %%a in ('reg query HKCU\Software\WOW6432Node\Valve\Steam /v SteamPath') DO SET SteamPath=%%a
+    SET SteamPath=%SteamPath:~26%
+    SET SteamPath=%SteamPath: =%
+)
+IF NOT EXIST "%SteamPath%" (
+    FOR /f "delims=" %%a in ('reg query HKLM\SOFTWARE\WOW6432Node\Valve\Steam /v InstallPath') DO SET SteamPath=%%a
+    SET SteamPath=%SteamPath:~26%
+    SET SteamPath=%SteamPath: =%
+)
+IF NOT EXIST "%SteamPath%" (
     ECHO Could not find the Steam installation path
     GOTO :enter
 )
 
 ECHO Found Steam folder at %SteamPath%
-set ScrapMechanicPath=%SteamPath%\steamapps\common\Scrap Mechanic
+SET ScrapMechanicPath=%SteamPath%\steamapps\common\Scrap Mechanic
 IF EXIST "%ScrapMechanicPath%" goto :found
 
 :enter
@@ -29,7 +47,7 @@ ECHO.
 ECHO Could not find Scrap Mechanic folder. Please enter the Scrap Mechanic installation folder manually.
 ECHO To exit this script, do not enter anything and press enter.
 SET /p ScrapMechanicPath="Scrap Mechanic folder: "
-set ScrapMechanicPath=%ScrapMechanicPath:"=%
+SET ScrapMechanicPath=%ScrapMechanicPath:"=%
 IF "%ScrapMechanicPath%" == "" goto :EOF
 IF NOT EXIST "%ScrapMechanicPath%" goto :enter
 
