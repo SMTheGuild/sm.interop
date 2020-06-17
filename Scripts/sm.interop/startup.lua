@@ -119,7 +119,9 @@ function startup.register(mod, name, fileName, dependencies)
             print('Delaying script '.. fn..', missing dependencies')
             for _,v in ipairs(dependencies) do
                 print(' * '..v)
-                scriptsAwaitingDependencies[v] = {
+                local f = scriptsAwaitingDependencies[v] or {}
+                scriptsAwaitingDependencies[v] = f
+                f[#f + 1] = {
                     mod = mod,
                     fileName = fileName,
                     dependencies = dependencies
