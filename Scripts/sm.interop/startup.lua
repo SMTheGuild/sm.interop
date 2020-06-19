@@ -67,8 +67,8 @@ local function runScript(fullName, fileName, mod)
                 end
             end
             if not missingDependency then
-                startupState.currentMod = dependency.mod
-                runScript(dependency.fullName, dependency.fileName, dependency.mod)
+                startupState.currentMod = v.mod
+                runScript(v.fullName, v.fileName, v.mod)
                 startupState.currentMod = nil
             end
         end
