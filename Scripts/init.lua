@@ -5,9 +5,8 @@ end
 
 -- Don't load if not actually selected as mod
 -- Check by seeing if the server part shape is registered
-local modPartsLoaded, error = pcall(sm.item.getShapeSize, sm.uuid.new('cf73bdd4-caab-440d-b631-2cac12c17904'))
+local modPartsLoaded, err = pcall(sm.item.getShapeSize, sm.uuid.new('cf73bdd4-caab-440d-b631-2cac12c17904'))
 if not modPartsLoaded then
-    print('Error occurred: ' .. error)
     error('sm.interop is not enabled for this world')
 end
 
