@@ -220,6 +220,7 @@ function startup.runOldScript(fn, data)
                     if not scriptRan[dependency] then
                         if dependenciesCalled[dependency] then
                             print('[sm.interop] Cannot run '..fn ..', missing dependency at startup')
+                            return
                         else
                             startup.runOldScript(dependency, oldScripts[dependency])
                         end
@@ -228,7 +229,7 @@ function startup.runOldScript(fn, data)
             end
             logpcall(runScript, fn, data.fileName, data.mod)
         else
-            print('[sm.interop] Did not load startup script "'..k..'", mod\'s identifying part not found')
+            print('[sm.interop] Did not load startup script "'..fn..'", mod\'s identifying part not found')
         end
     end
 end
