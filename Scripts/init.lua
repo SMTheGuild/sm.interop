@@ -11,7 +11,7 @@ if not modPartsLoaded then
 end
 
 sm.interop = {
-    version = '0.1.2',
+    version = '0.1.3',
     connectionType = 4096,
     gamefileModVersion = 1
 }
