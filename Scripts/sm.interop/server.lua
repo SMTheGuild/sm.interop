@@ -49,13 +49,14 @@ function server.createIfNecessary()
 end
 
 function server.createNewShape()
-    serverData.serverClass = nil
     local shape = sm.shape.createPart(SERVER_SHAPE_UUID, SERVER_SHAPE_POSITION, sm.quat.identity(), false, false)
 end
 
 function server.callStartupScriptsChanged()
     if serverData.serverClass then
         serverData.serverClass:interop_notifyOfStartupChange()
+    else
+        sm.log.error('Startup scripts changed, no Server')
     end
 end
 
