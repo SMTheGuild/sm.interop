@@ -6,4 +6,4 @@ buildexclude
 Workshop description.bb
 description_build.json
 description.json
-preview.xcf
+preview source.xcf
