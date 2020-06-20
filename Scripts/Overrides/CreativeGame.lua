@@ -1,5 +1,3 @@
-sm.interopGamefileModVersion = 2
-
 local oldCreate = CreativeGame.client_onCreate
 
 function CreativeGame.client_onCreate(self)
@@ -39,10 +37,14 @@ function CreativeGame.cl_onInteropCommand(self, params)
     end
     local commandName = params[2]
     local args = {unpack(params, 3)}
-    local success, error = pcall(sm.interop.commands.call, commandName, args)
+    local success, error = pcall(sm.interop.commands.call, commandName, args, self.network)
     if not success then
         sm.gui.chatMessage('#ff0000Error: #ffffffAn error occurred while executing this command')
         print(error)
         return
     end
+end
+
+function CreativeGame.sv_cl_commandSubFunction(self, params)
+    sm.interop.commands.callSubFunction(params.modName, params.commandName, params.functionName, params.params)
 end
