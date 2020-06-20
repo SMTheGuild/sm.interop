@@ -32,6 +32,7 @@ function events.listen(event, listenerFunction, priority, listenerClass, targetE
     assertArg(2, listenerFunction, 'function')
 
     event = event:lower()
+    if targetEnvironment == nil then targetEnvironment = 'both' end
 
     -- Register listener
     local thisEventId = eventId
