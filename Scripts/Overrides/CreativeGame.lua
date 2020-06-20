@@ -20,7 +20,7 @@ function CreativeGame.client_onCreate(self)
 end
 
 function CreativeGame.server_onPlayerJoined( self, player, newPlayer )
-    if sm.interop then
+    if sm.interop ~= nil then
         sm.interop.events.emit('scrapmechanic:playerJoined', {
             player = player,
             newPlayer = newPlayer
@@ -29,7 +29,7 @@ function CreativeGame.server_onPlayerJoined( self, player, newPlayer )
 end
 
 function CreativeGame.client_onUpdate(self, dt)
-    if sm.interop then
+    if sm.interop ~= nil then
         local toRegister = sm.interop.commands.getCommandsToRegister()
         if toRegister ~= nil then
             if v ~= 'mod' then
