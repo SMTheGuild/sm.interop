@@ -16,7 +16,7 @@ function CreativeTerrainWorld.server_onProjectile(self, hitPos, hitTime, hitVelo
             attacker = attacker,
             damage = damage,
             userData = userData
-        })
+        }, 'both', true)
     end
 end
 
@@ -27,6 +27,6 @@ function CreativeTerrainWorld.server_onProjectileFire(self, firePos, fireVelocit
             fireVelocity = fireVelocity,
             projectileName = projectileName,
             attacker = attacker
-        })
+        }, 'both', true)
     end
 end

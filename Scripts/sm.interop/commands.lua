@@ -64,9 +64,7 @@ function commands.register(mod, commandName, handler, description)
     end
 
     if commandRegistry[commandName] == nil then
-        commandRegistry[commandName] = {
-            ['#n'] = 0
-        }
+        commandRegistry[commandName] = { ['#n'] = 0 }
         commandsToRegister[#commandsToRegister + 1] = commandName
     end
 

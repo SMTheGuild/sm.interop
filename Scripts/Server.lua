@@ -55,20 +55,18 @@ end
 -- Client-server event transmission
 --
 function Server.server_transmitEvents(self)
-    local events = sm.interop.events.getSendToServerEvents()
+    local events = sm.interop.events.getSendToClientsEvents()
     if #events > 0 then
         self.network:sendToClients('cl_sv_emitEvents', events)
-        print('SentToClients')
     end
 end
 function Server.client_transmitEvents(self)
     local events = sm.interop.events.getSendToServerEvents()
     if #events > 0 then
-        self.network:sendToClients('cl_sv_emitEvents', events)
-        print('SentToServer')
+        self.network:sendToServer('cl_sv_emitEvents', events)
     end
 end
-function Server.sv_cl_emitEvents(self, params)
+function Server.cl_sv_emitEvents(self, params)
     for i,v in ipairs(params) do
         sm.interop.events.emit(v.name, v.data, v.targetEnvironment, false)
     end

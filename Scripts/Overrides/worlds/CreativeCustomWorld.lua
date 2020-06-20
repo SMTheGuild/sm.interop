@@ -16,7 +16,7 @@ function CreativeCustomWorld.server_onProjectile(self, hitPos, hitTime, hitVeloc
             attacker = attacker,
             damage = damage,
             userData = userData
-        })
+        }, 'both', true)
     end
 end
 
@@ -27,6 +27,6 @@ function CreativeCustomWorld.server_onProjectileFire(self, firePos, fireVelocity
             fireVelocity = fireVelocity,
             projectileName = projectileName,
             attacker = attacker
-        })
+        }, 'both', true)
     end
 end

@@ -24,7 +24,7 @@ function CreativeGame.server_onPlayerJoined( self, player, newPlayer )
         sm.interop.events.emit('scrapmechanic:playerJoined', {
             player = player,
             newPlayer = newPlayer
-        })
+        }, 'both', true)
     end
 end
 
