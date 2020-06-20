@@ -143,7 +143,6 @@ end
 
 function startup.restoreStartupScripts(scripts)
     for fullName, data in pairs(scripts) do
-        print('RestoreDep '..fullName, data.dependencies)
         oldScripts[fullName] = {
             dependencies = data.dependencies,
             fileName = data.fileName,
