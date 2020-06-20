@@ -65,7 +65,20 @@ end
 
 function sm.interop.util.assertArgumentType(n, argument, expectedType)
     local argumentType = type(argument)
-    assert(argumentType == expectedType, 'Argument #' .. n .. ' expected ' .. expectedType .. ', got ' .. argumentType)
+    if type(expectedType) == 'string' then
+        assert(argumentType == expectedType, 'Argument #' .. n .. ' expected ' .. expectedType .. ', got ' .. argumentType)
+    elseif type(expectedType) == 'table' then
+        local found = false
+        for i,v in ipairs(expectedType) do
+            if argumentType == v then
+                found = true
+                break
+            end
+        end
+        if not found then
+            erorr('Argument #' .. n .. ' expected any of ' .. table.concat(expectedType, ', ') .. ', got ' .. argumentType)
+        end
+    end
 end
 
 function sm.interop.util.getFullName(mod, name)
