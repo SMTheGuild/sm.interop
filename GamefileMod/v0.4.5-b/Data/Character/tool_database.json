@@ -1,0 +1,62 @@
+{
+	"toolList":
+	[
+		{
+			"uuid": "5cc12f03-275e-4c8e-b013-79fc0f913e1b",
+			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_lift_preview.rend",
+			"previewRotation": [ 1, 0, 0, 0, 0, -1, 0, 1, 0 ],
+			"script": { "file": "$GAME_DATA/Scripts/game/Lift.lua", "class": "Lift" }
+		},
+		{
+			"uuid": "ed185725-ea12-43fc-9cd7-4295d0dbf88b",
+			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_sledgehammer_preview.rend",
+			"previewRotation": [ -1, 0, 0, 0, 0, 1, 0, 1, 0 ],
+			"sledgehammer": { }
+		},
+		{
+			"uuid": "8c7efc37-cd7c-4262-976e-39585f8527bf",
+			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_connecttool_preview.rend",
+			"previewRotation": [ 1, 0, 0, 0, 0, -1, 0, 1, 0 ],
+			"connect": { }
+		},
+		{
+			"uuid": "c60b9627-fc2b-4319-97c5-05921cb976c6",
+			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_painttool_preview.rend",
+			"previewRotation": [ -1, 0, 0, 0, 0, 1, 0, 1, 0 ],
+			"paint": { }
+		},
+		{
+			"uuid": "fdb8b8be-96e7-4de0-85c7-d2f42e4f33ce",
+			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_weldtool_preview.rend",
+			"previewRotation": [ 1, 0, 0, 0, 0, -1, 0, 1, 0 ],
+			"weld": { }
+		},
+		{
+			"uuid": "3384010e-bc1c-42bb-83ef-dbc78a1f9636",
+			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_handbook_preview.rend",
+			"previewRotation": [ 0, 0, -1, -1, 0, 0, 0, 1, 0 ],
+			"handbook": { }
+		},
+		{
+			"uuid": "448f7c93-699d-47b4-8e3e-296971067ef4",
+			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_spudgun_preview.rend",
+			"previewRotation": [ 1, 0, 0, 0, 0, -1, 0, 1, 0 ],
+			"script": { "file": "$GAME_DATA/Scripts/game/Spudgun.lua", "class": "Spudgun" }
+		},
+        {
+            "uuid": "e74ff990-adac-434f-9967-bf9833d0bd69",
+            "previewRenderable": "$GAME_DATA/Character/Char_Tools/char_spudgun_preview.rend",
+            "previewRotation": [ 1, 0, 0, 0, 0, -1, 0, 1, 0 ],
+            "script": { "file": "$CONTENT_e94ac99f-393e-4816-abe3-353435a1edf4/Scripts/ModdedTool.lua", "class": "ModdedTool" },
+            "autoTool": true
+        }
+	]
+}
+//			"previewRotation": [ 1, 0, 0, 0, 0, -1, 0, 1, 0 ], //Point Forward (Default)
+//			"previewRotation": [ -1, 0, 0, 0, 0, 1, 0, 1, 0 ], //Point Backward
+//			"previewRotation": [ 0, 0, 1, 1, 0, 0, 0, 1, 0 ], //Point Right
+//			"previewRotation": [ 0, 0, -1, -1, 0, 0, 0, 1, 0 ], //Point Left
+//			"previewRotation": [ 1, 0, 0, 0, 1, 0, 0, 0, 1 ], //Point Up
+//			"previewRotation": [ 1, 0, 0, 0, -1, 0, 0, 0, -1 ], //Point Down
+//			"previewRotation": [ 0, 0, 1, -1, 0, 0, 0, 1, 0 ], //Turn Right
+//			"previewRotation": [ 0, 0, -1, 1, 0, 0, 0, 1, 0 ], //Turn Left
