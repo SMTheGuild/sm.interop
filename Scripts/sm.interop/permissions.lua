@@ -10,7 +10,7 @@ local DefaultPermissionManager = {
         if level == 'all' then
             return true
         elseif level == 'host' then
-            return sm.interop.permissions.isHost(player)
+            return player.id == 1
         -- Todo: make neater
         elseif level == 'survival' then
             return sm.event.sendToGame('sv_killPlayer', {})
@@ -77,7 +77,7 @@ end
 --- Checks whether a player is the host.
 -- @return `boolean`
 function sm.interop.permissions.isHost(player)
-    return sm.localPlayer.id == player.id and sm.isHost
+    return player.id == 1
 end
 
 --- Checks if the user has a certain permission
