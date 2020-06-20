@@ -31,8 +31,8 @@ function Server.server_onFixedUpdate(self)
                 startup.startRunOldScripts()
                 self.startupScriptsRun = true
             end
-
             scheduler.tick()
+            self:server_transmitEvents()
         else
             -- Destroy this part if it doesn't belong here
             server.createNewShape()
@@ -47,6 +47,36 @@ function Server.server_onFixedUpdate(self)
     end
 end
 
+function Server.client_onUpdate(self, dt)
+    self:client_transmitEvents()
+end
+
+--
+-- Client-server event transmission
+--
+function Server.server_transmitEvents(self)
+    local events = sm.interop.events.getSendToServerEvents()
+    if #events > 0 then
+        self.network:sendToClients('cl_sv_emitEvents', events)
+        print('SentToClients')
+    end
+end
+function Server.client_transmitEvents(self)
+    local events = sm.interop.events.getSendToServerEvents()
+    if #events > 0 then
+        self.network:sendToClients('cl_sv_emitEvents', events)
+        print('SentToServer')
+    end
+end
+function Server.sv_cl_emitEvents(self, params)
+    for i,v in ipairs(params) do
+        sm.interop.events.emit(v.name, v.data, v.targetEnvironment, false)
+    end
+end
+
+--
+-- Startup scripts
+--
 function Server.server_saveStartupScripts(self)
     self.storage:save(startup.getStartupScripts())
     self.startupChanged = false

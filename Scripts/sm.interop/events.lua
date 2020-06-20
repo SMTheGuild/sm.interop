@@ -6,6 +6,8 @@ local assertArg = sm.interop.util.assertArgumentType
 local events = {}
 local listeners = {}
 local instanceToEventName = {}
+local toServerEvents = {}
+local toClientEvents = {}
 
 local eventId = 1
 local removedEventIds = {}
@@ -25,7 +27,7 @@ end
 -- @param listener function The function that is to be executed when this event
 -- @param priority Order in which it should be called
 --                          is called.
-events.listen = function(event, listenerFunction, priority, listenerClass)
+function events.listen(event, listenerFunction, priority, listenerClass)
     assertArg(1, event, 'string')
     assertArg(2, listenerFunction, 'function')
 
@@ -47,34 +49,80 @@ events.listen = function(event, listenerFunction, priority, listenerClass)
     return thisEventId
 end
 
-events.remove = function(eventId)
+function events.remove(eventId)
+    sm.log.warning('sm.interop.events.remove is deprecated, use .removeListener instead')
+    events.removeListener(eventId)
+end
+
+function events.removeListener(eventId)
     removedEventIds[eventId] = true
 end
 
----
--- @param event string
--- @param data  mixed
-events.emit = function(event, data)
+function events.emit(event, data, targetEnvironment, sendAcrossNetwork)
+    -- Arguments
     assertArg(1, event, 'string')
     event = event:lower()
 
-    local handlers = listeners[event] or {}
-    for i=1,#handlers do
-        local handler = handlers[i]
-        if not removedEventIds[handler[3]] then
-            local result, error
-            if handler[1] == nil then
-                result, error = pcall(handler[2], data)
+    if targetEnvironment == nil then
+        targetEnvironment = 'both'
+    end
+    assertArg(3, targetEnvironment, 'string')
+    assert(targetEnvironment == 'client' or targetEnvironment == 'server' or targetEnvironment == 'both', 'targetEnvironment must be client, server or both (default)')
+
+    if sendAcrossNetwork == nil then
+        sendAcrossNetwork = false
+    end
+    assertArg(4, sendAcrossNetwork, 'boolean')
+
+    local correctEnvironment = targetEnvironment == 'both' or (targetEnvironment == 'server') == sm.isServerMode()
+    if correctEnvironment then
+        local handlers = listeners[event] or {}
+        for i=1,#handlers do
+            local handler = handlers[i]
+            if not removedEventIds[handler[3]] then
+                local result, error
+                if handler[1] == nil then
+                    result, error = pcall(handler[2], data)
+                else
+                    result, error = pcall(handler[2], handler[1], data)
+                end
+                if not result then
+                    sm.log.error(error)
+                end
             else
-                result, error = pcall(handler[2], handler[1], data)
+                handlers[i] = nil
             end
-            if not result then
-                sm.log.error(error)
-            end
-        else
-            handlers[i] = nil
         end
     end
+
+    local sendToDifferentEnvironment = targetEnvironment == 'both' or (targetEnvironment == 'client') == sm.isServerMode()
+    if sendAcrossNetwork and sendToDifferentEnvironment then
+        if sm.isServerMode() then
+            toClientEvents[#toClientEvents + 1] = {
+                name = event,
+                data = data,
+                targetEnvironment = targetEnvironment
+            }
+        else
+            toServerEvents[#toServerEvents + 1] = {
+                name = event,
+                data = data,
+                targetEnvironment = targetEnvironment
+            }
+        end
+    end
+end
+
+function events.getSendToClientsEvents()
+    local f = toClientEvents
+    toClientEvents = {}
+    return f
+end
+
+function events.getSendToServerEvents()
+    local f = toServerEvents
+    toServerEvents = {}
+    return f
 end
 
 -- @export
