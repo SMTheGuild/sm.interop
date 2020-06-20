@@ -6,7 +6,9 @@ if "%ERRORLEVEL%"=="0" (
     pause
     exit
 )
-start steam://validate/387990
-echo Wait until Steam is done validating Scrap Mechanic
-pause
+
+REM Don't validate because we're only overwriting previously overwritten files
+REM start steam://validate/387990
+REM echo Wait until Steam is done validating Scrap Mechanic
+REM pause
 Install.bat
