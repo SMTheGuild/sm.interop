@@ -76,7 +76,7 @@ function sm.interop.util.assertArgumentType(n, argument, expectedType)
             end
         end
         if not found then
-            erorr('Argument #' .. n .. ' expected any of ' .. table.concat(expectedType, ', ') .. ', got ' .. argumentType)
+            error('Argument #' .. n .. ' expected any of ' .. table.concat(expectedType, ', ') .. ', got ' .. argumentType)
         end
     end
 end
