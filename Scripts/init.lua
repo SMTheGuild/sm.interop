@@ -35,9 +35,3 @@ dofile 'sm.interop/server.lua'
 dofile 'sm.interop/services.lua'
 dofile 'sm.interop/startup.lua'
 dofile 'sm.interop/scheduler.lua'
-
--- Create server part
-if sm.isServerMode() then
-    print('Servermode: createIfNecessary')
-    sm.interop.server.createIfNecessary()
-end
