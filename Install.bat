@@ -22,24 +22,24 @@ IF EXIST "%ScrapMechanicPath%" GOTO :found
 REM Try by finding the Steam installation path
 FOR /f "delims=" %%a in ('reg query HKCU\Software\Valve\Steam /v SteamPath') DO SET SteamPath=%%a
 SET SteamPath=%SteamPath:~26%
-SET SteamPath=%SteamPath: =%
 IF NOT EXIST "%SteamPath%" (
     FOR /f "delims=" %%a in ('reg query HKCU\Software\WOW6432Node\Valve\Steam /v SteamPath') DO SET SteamPath=%%a
     SET SteamPath=%SteamPath:~26%
-    SET SteamPath=%SteamPath: =%
 )
 IF NOT EXIST "%SteamPath%" (
     FOR /f "delims=" %%a in ('reg query HKLM\SOFTWARE\WOW6432Node\Valve\Steam /v InstallPath') DO SET SteamPath=%%a
     SET SteamPath=%SteamPath:~26%
-    SET SteamPath=%SteamPath: =%
 )
 IF NOT EXIST "%SteamPath%" (
     ECHO Could not find the Steam installation path
     GOTO :enter
 )
 
+SET SteamPath=%SteamPath:/=\%
+SET SteamPath=%SteamPath:"=%
 ECHO Found Steam folder at %SteamPath%
 SET ScrapMechanicPath=%SteamPath%\steamapps\common\Scrap Mechanic
+SET ScrapMechanicPath=%ScrapMechanicPath:"=%
 IF EXIST "%ScrapMechanicPath%" goto :found
 
 :enter
