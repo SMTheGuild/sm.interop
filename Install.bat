@@ -1,5 +1,7 @@
-@ECHO off
-CLS
+IF NOT "%1" == "debug" (
+  ECHO OFF
+  CLS
+)
 
 REM Check if Scrap Mechanic is running
 tasklist /FI "IMAGENAME eq ScrapMechanic.exe" 2>NUL | find /I /N "ScrapMechanic.exe">NUL
@@ -22,13 +24,16 @@ IF EXIST "%ScrapMechanicPath%" GOTO :found
 REM Try by finding the Steam installation path
 FOR /f "delims=" %%a in ('reg query HKCU\Software\Valve\Steam /v SteamPath') DO SET SteamPath=%%a
 SET SteamPath=%SteamPath:~26%
+for /f "tokens=* delims= " %%a in ("%SteamPath%") do set SteamPath=%%a
 IF NOT EXIST "%SteamPath%" (
     FOR /f "delims=" %%a in ('reg query HKCU\Software\WOW6432Node\Valve\Steam /v SteamPath') DO SET SteamPath=%%a
     SET SteamPath=%SteamPath:~26%
+    for /f "tokens=* delims= " %%a in ("%SteamPath%") do set SteamPath=%%a
 )
 IF NOT EXIST "%SteamPath%" (
     FOR /f "delims=" %%a in ('reg query HKLM\SOFTWARE\WOW6432Node\Valve\Steam /v InstallPath') DO SET SteamPath=%%a
     SET SteamPath=%SteamPath:~26%
+    for /f "tokens=* delims= " %%a in ("%SteamPath%") do set SteamPath=%%a
 )
 IF NOT EXIST "%SteamPath%" (
     ECHO Could not find the Steam installation path
