@@ -44,7 +44,7 @@ end
 
 function sm.interop.util.round(number, precision)
     precision = precision or 1
-    return math.round(number / precision) * precision
+    return math.floor((number / precision) + (number >= 0 and 0.5 or -0.5)) * precision
 end
 
 function sm.interop.util.wrapNumber(min, max, value)
