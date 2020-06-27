@@ -27,7 +27,7 @@ local function wrapNetwork(network, modName, commandName)
         end,
         sendToClients = function(self, functionName, params)
             assertArg(2, functionName, 'string')
-            network:sendToClients(player, 'sv_cl_interopCommandSubFunction', {
+            network:sendToClients('sv_cl_interopCommandSubFunction', {
                 modName = modName,
                 commandName = commandName,
                 functionName = functionName,
