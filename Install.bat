@@ -68,6 +68,8 @@ SET VersionPath=
 IF "%ScrapMechanicHash%" == "DF6B87CF0D3B22236F264D5F9E6D4D8E" SET VersionPath=v0.4.5-b
 IF "%ScrapMechanicHash%" == "3509749C8EC5490826715CE93D871C38" SET VersionPath=v0.4.5-b
 IF "%ScrapMechanicHash%" == "1DA5EC95282C0A2E1562A97C0EA5F98C" SET VersionPath=v0.4.5-b
+IF "%ScrapMechanicHash%" == "DD4C9A898664750C30826267095EA445" SET VersionPath=v0.4.5-b
+
 IF NOT "%VersionPath%" == "" GOTO :install
 ECHO There is no sm.interop gamefile mod for your current Scrap Mechanic version (yet) (Found unknown hash: %ScrapMechanicHash%)
 ECHO Do you want to use the latest version
