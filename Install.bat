@@ -60,15 +60,13 @@ IF NOT EXIST "%ScrapMechanicPath%" goto :enter
 ECHO Found Scrap Mechanic folder at: %ScrapMechanicPath%
 ECHO Checking game version...
 
+SET VersionPath=v0.4.5-b
+GOTO :install
+
 %windir%\System32\WindowsPowerShell\v1.0\powershell.exe -c "(get-filehash -a md5 \"%ScrapMechanicPath%\Release\ScrapMechanic.exe\").Hash" > sm_hash.txt
 SET /p ScrapMechanicHash=<sm_hash.txt
 DEL sm_hash.txt
 
-SET VersionPath=
-IF "%ScrapMechanicHash%" == "DF6B87CF0D3B22236F264D5F9E6D4D8E" SET VersionPath=v0.4.5-b
-IF "%ScrapMechanicHash%" == "3509749C8EC5490826715CE93D871C38" SET VersionPath=v0.4.5-b
-IF "%ScrapMechanicHash%" == "1DA5EC95282C0A2E1562A97C0EA5F98C" SET VersionPath=v0.4.5-b
-IF "%ScrapMechanicHash%" == "DD4C9A898664750C30826267095EA445" SET VersionPath=v0.4.5-b
 
 IF NOT "%VersionPath%" == "" GOTO :install
 ECHO There is no sm.interop gamefile mod for your current Scrap Mechanic version (yet) (Found unknown hash: %ScrapMechanicHash%)
@@ -81,7 +79,7 @@ IF UseLatest == "y" (
 goto :EOF
 
 :install
-ECHO Installing sm.interop game files for version %VersionPath%
+ECHO Installing sm.interop game files for version %VersionPath% and higher
 xcopy "GamefileMod\%VersionPath%" "%ScrapMechanicPath%" /y /s
 ECHO Game files installed!
 PAUSE
