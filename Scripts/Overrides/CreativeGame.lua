@@ -21,11 +21,26 @@ end
 
 function CreativeGame.server_onPlayerJoined( self, player, newPlayer )
     if sm.interop ~= nil then
+        -- Load startup scripts for this person
+        self.network:sendToClient(player, 'cl_interopLoadStartups', {
+            startupScripts = sm.interop.startup.getStartupScripts()
+        })
+
+        -- Emit playerJoined event
         sm.interop.events.emit('scrapmechanic:playerJoined', {
             player = player,
             newPlayer = newPlayer
         }, 'both', true)
     end
+end
+
+function CreativeGame.cl_interopLoadStartups(self, params)
+    sm.interop.startup.restoreStartupScripts(params.startupScripts)
+    self.network:sendToServer('sv_interopLoadStartups', {})
+end
+
+function CreativeGame.sv_interopLoadStartups(self, params)
+    sm.interop.startup.startRunOldScripts()
 end
 
 function CreativeGame.client_onUpdate(self, dt)
