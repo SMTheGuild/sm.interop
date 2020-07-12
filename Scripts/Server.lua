@@ -4,11 +4,14 @@ dofile 'init.lua'
 local server = sm.interop.server
 local startup = sm.interop.startup
 local scheduler = sm.interop.scheduler
+local storage = sm.interop.storage
 
 Server = class(nil)
 
 function Server.server_onCreate(self)
     server.serverPartCreated(self)
+
+    storage.loadModData()
 
     self.destroyTimer = -1
     self.startupScriptsRun = false
@@ -30,6 +33,10 @@ function Server.server_onFixedUpdate(self)
                 self:server_saveStartupScripts()
                 startup.startRunOldScripts()
                 self.startupScriptsRun = true
+            end
+            if self.storageChanged then
+                sm.interop.storage.storeModData()
+                self.storageChanged = false
             end
             scheduler.tick()
             self:server_transmitEvents()
@@ -82,4 +89,7 @@ end
 
 function Server.interop_notifyOfStartupChange(self)
     self.startupChanged = true
+end
+function Server.interop_notifyOfStorageChange(self)
+    self.storageChanged = true
 end

@@ -59,6 +59,11 @@ function server.callStartupScriptsChanged()
         sm.log.error('Startup scripts changed, no Server')
     end
 end
+function server.callStartupScriptsChanged()
+    if serverData.serverClass then
+        serverData.serverClass:interop_notifyOfStorageChange()
+    end
+end
 
 function server.exists()
     return serverData.shape ~= nil and sm.exists(serverData.shape) and not serverData.shape.body:isDynamic()
