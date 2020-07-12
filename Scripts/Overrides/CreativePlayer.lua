@@ -42,16 +42,17 @@ function CreativePlayer.server_onExplosion( self, center, destructionLevel )
     })
 end
 
-function CreativePlayer.server_onCollision( self, other, collisionPosition, selfPointVelocity, otherPointVelocity, collisionNormal  )
-    self:emitEvent(false, 'playerCollision', {
-        player = self.player,
-        other = other,
-        collisionPosition = collisionPosition,
-        selfPointVelocity = selfPointVelocity,
-        otherPointVelocity = otherPointVelocity,
-        collisionNormal = collisionNormal
-    })
-end
+-- Disabled for performance reasons
+-- function CreativePlayer.server_onCollision( self, other, collisionPosition, selfPointVelocity, otherPointVelocity, collisionNormal  )
+--     self:emitEvent(false, 'playerCollision', {
+--         player = self.player,
+--         other = other,
+--         collisionPosition = collisionPosition,
+--         selfPointVelocity = selfPointVelocity,
+--         otherPointVelocity = otherPointVelocity,
+--         collisionNormal = collisionNormal
+--     })
+-- end
 
 function CreativePlayer.client_onCancel( self )
     self:emitEvent(true, 'playerCancel', { player = self.player })
