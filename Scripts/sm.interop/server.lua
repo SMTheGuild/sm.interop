@@ -59,7 +59,7 @@ function server.callStartupScriptsChanged()
         sm.log.error('Startup scripts changed, no Server')
     end
 end
-function server.callStartupScriptsChanged()
+function server.callStorageChanged()
     if serverData.serverClass then
         serverData.serverClass:interop_notifyOfStorageChange()
     end
