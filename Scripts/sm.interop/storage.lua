@@ -36,7 +36,7 @@ function storage.save(mod, key, value)
         storageData[namespace] = {}
     end
     storageData[namespace][key] = value
-    sm.interop.server.callStartupScriptsChanged();
+    sm.interop.server.callStorageChanged();
 end
 
 -- @export
