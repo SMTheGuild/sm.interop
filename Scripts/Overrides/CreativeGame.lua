@@ -67,12 +67,12 @@ function CreativeGame.cl_onInteropCommand(self, params)
     end
     local commandName = params[2]
     local args = {unpack(params, 3)}
-    local success, error = pcall(sm.interop.commands.call, commandName, args, self.network)
-    if not success then
-        sm.gui.chatMessage('#ff0000Error: #ffffffAn error occurred while executing this command')
-        print(error)
-        return
-    end
+    local world = sm.localPlayer.getPlayer():getCharacter():getWorld()
+    self.network:sendToServer('sv_interopCommandExecute', {
+        player = sm.localPlayer.getPlayer(),
+        commandName = commandName,
+        args = args
+    })
 end
 
 function CreativeGame.cl_onInteropCommand2(self, params)
@@ -82,14 +82,14 @@ function CreativeGame.cl_onInteropCommand2(self, params)
     end
     local commandName = params[1]:sub(2)
     local args = {unpack(params, 2)}
-    local success, error = pcall(sm.interop.commands.call, commandName, args, self.network)
-    if not success then
-        sm.gui.chatMessage('#ff0000Error: #ffffffAn error occurred while executing this command')
-        print(error)
-        return
-    end
+    self.network:sendToServer('sv_interopCommandExecute', {
+        player = sm.localPlayer.getPlayer(),
+        commandName = commandName,
+        args = args
+    })
 end
 
-function CreativeGame.sv_cl_interopCommandSubFunction(self, params)
-    sm.interop.commands.callSubFunction(params.modName, params.commandName, params.functionName, params.params)
+function CreativeGame.sv_interopCommandExecute(self, params)
+    local world = params.player:getCharacter():getWorld()
+    sm.event.sendToWorld(world, 'sv_interopCommandExecute', params)
 end

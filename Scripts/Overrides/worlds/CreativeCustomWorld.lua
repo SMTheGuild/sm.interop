@@ -30,3 +30,22 @@ function CreativeCustomWorld.server_onProjectileFire(self, firePos, fireVelocity
         }, 'both', true)
     end
 end
+
+function CreativeCustomWorld.sv_cl_interopCommandSubFunction(self, params)
+    sm.interop.commands.callSubFunction(params.modName, params.commandName, params.functionName, params.params)
+end
+
+function CreativeCustomWorld.cl_interopCommandExecute(self, params)
+    local success, error = pcall(sm.interop.commands.call, params.commandName, params.args, self.network)
+    if not success then
+        sm.gui.chatMessage('#ff0000Error: #ffffffAn error occurred while executing this command')
+        sm.error.log(error)
+    end
+end
+
+function CreativeCustomWorld.sv_interopCommandExecute(self, params)
+    self.network:sendToClient(params.player, 'cl_interopCommandExecute', {
+        commandName = params.commandName,
+        args = params.args
+    })
+end
