@@ -36,10 +36,10 @@ function CreativeFlatWorld.sv_cl_interopCommandSubFunction(self, params)
 end
 
 function CreativeFlatWorld.cl_interopCommandExecute(self, params)
-    local success, error = pcall(sm.interop.commands.call, params.commandName, params.args, self.network)
+    local success, err = pcall(sm.interop.commands.call, params.commandName, params.args, self.network)
     if not success then
         sm.gui.chatMessage('#ff0000Error: #ffffffAn error occurred while executing this command')
-        sm.error.log(error)
+        print(err)
     end
 end
 
