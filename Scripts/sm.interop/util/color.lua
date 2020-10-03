@@ -97,6 +97,35 @@ function color.toHSV( rgba )
 	return hsv
 end
 
+-- RGB to Hex converter
+function color.toHex(rgba)
+    if type(rgba) == 'Color' then
+        rgba = { r = rgba.r * 255, g = rgba.g * 255, b = rgba.b * 255, a = rgba.a * 255 }
+    end
+    local characters = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+    local function makeHex(value)
+        local hex = ''
+        while value > 0 do
+            local index = math.floor(math.fmod(value, 16)) + 1
+            value = math.floor(value / 16)
+            hex = characters[index] .. hex
+        end
+
+        local hexLength = hex:len()
+        if hexLength == 0 then
+            hex = '00'
+        elseif hexLength == 1 then
+            hex = '0' .. hex
+        end
+        return hex
+    end
+    hexadecimal = makeHex(rgba.r) .. makeHex(rgba.g) .. makeHex(rgba.b)
+    if rgba.a ~= nil then
+        hexadecimal = hexadecimal .. makeHex(rgba.a)
+    end
+    return hexadecimal
+end
+
 --HSV to RGB converter
 function color.toRGB( hsv )
 	assert(type(hsv) == "table" and hsv.h ~= nil and hsv.s ~= nil and hsv.v ~= nil, "toRGB: argument 1, HSV expected! got: "..type(hsv))
