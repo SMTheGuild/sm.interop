@@ -13,7 +13,7 @@ end
 sm.interop = {
     version = '0.2.0',
     connectionType = 4096,
-    gamefileModVersion = 1
+    gamefileModVersion = 3
 }
 
 if not sm.interopGamefileModVersion or sm.interopGamefileModVersion < sm.interop.gamefileModVersion then

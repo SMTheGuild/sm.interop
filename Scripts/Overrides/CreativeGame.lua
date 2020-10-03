@@ -68,11 +68,14 @@ function CreativeGame.cl_onInteropCommand(self, params)
     local commandName = params[2]
     local args = {unpack(params, 3)}
     local world = sm.localPlayer.getPlayer():getCharacter():getWorld()
-    self.network:sendToServer('sv_interopCommandExecute', {
+    local success = self.network:sendToServer('sv_interopCommandExecute', {
         player = sm.localPlayer.getPlayer(),
         commandName = commandName,
         args = args
     })
+    if not success then
+        sm.gui.chatMessage('#ff0000Error: Due to a bug, custom mod commands do not work in custom creative worlds. You have to update sm.interop in order to fix this. Go to the sm.interop Steam Workshop page to read how to do this.')
+    end
 end
 
 function CreativeGame.cl_onInteropCommand2(self, params)
@@ -82,11 +85,14 @@ function CreativeGame.cl_onInteropCommand2(self, params)
     end
     local commandName = params[1]:sub(2)
     local args = {unpack(params, 2)}
-    self.network:sendToServer('sv_interopCommandExecute', {
+    local success = self.network:sendToServer('sv_interopCommandExecute', {
         player = sm.localPlayer.getPlayer(),
         commandName = commandName,
         args = args
     })
+    if not success then
+        sm.gui.chatMessage('#ff0000Error: Due to a bug, custom mod commands do not work in custom creative worlds. You have to update sm.interop in order to fix this. Go to the sm.interop Steam Workshop page to read how to do this.')
+    end
 end
 
 function CreativeGame.sv_interopCommandExecute(self, params)
