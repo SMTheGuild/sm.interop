@@ -63,24 +63,9 @@ ECHO Checking game version...
 SET VersionPath=v0.4.5-b
 GOTO :install
 
-%windir%\System32\WindowsPowerShell\v1.0\powershell.exe -c "(get-filehash -a md5 \"%ScrapMechanicPath%\Release\ScrapMechanic.exe\").Hash" > sm_hash.txt
-SET /p ScrapMechanicHash=<sm_hash.txt
-DEL sm_hash.txt
-
-
-IF NOT "%VersionPath%" == "" GOTO :install
-ECHO There is no sm.interop gamefile mod for your current Scrap Mechanic version (yet) (Found unknown hash: %ScrapMechanicHash%)
-ECHO Do you want to use the latest version
-SET /p UseLatest="Type y or n: "
-IF UseLatest == "y" (
-    SET VersionPath=v0.4.5
-    GOTO :install
-)
-goto :EOF
-
 :install
-ECHO Installing sm.interop game files for version %VersionPath% and higher
-xcopy "GamefileMod\%VersionPath%" "%ScrapMechanicPath%" /y /s
+ECHO Installing sm.interop game files
+xcopy "GamefileMod" "%ScrapMechanicPath%" /y /s
 ECHO Game files installed!
 PAUSE
 
