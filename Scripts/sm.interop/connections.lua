@@ -219,7 +219,7 @@ end
 
 function connections.getTypes(interactable)
     local part = getPartClass(interactable)
-    local types = connections.getVanillaTypeNames(interactable)
+    local types = connections.getVanillaTypes(interactable)
     for k,v in pairs(part.moddedConnectionOutput) do
         types[#types + 1] = k
     end
