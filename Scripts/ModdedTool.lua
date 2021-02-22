@@ -106,7 +106,7 @@ function ModdedTool.client_onEquip(self)
             self.equipped = self:getInstanceFor(item)
             if self.equipped ~= nil then
                 self.equipped.data = sm.interop.tools.getToolData(item)
-                
+
                 -- Call client_onEquip if it exists
                 if type(self.equipped.client_onEquip) == 'function' then
                     logpcall(self.equipped.client_onEquip, self.equipped)
@@ -175,7 +175,7 @@ function ModdedTool.client_network(self, data)
     local instance = self:getInstanceFor(uuid)
     local mtd = instance[data.name]
     assert(type(mtd) == 'function', 'Callback ' .. data.name ..  ' does not exist in ' .. sm.shape.getShapeTitle(uuid) ..'\'s tool class')
-    logpcall(mtd, instance)
+    logpcall(mtd, instance, data.params)
 end
 
 function ModdedTool.server_onCreate(self)
