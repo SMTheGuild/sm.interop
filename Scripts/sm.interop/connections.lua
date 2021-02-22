@@ -259,6 +259,23 @@ function connections.getParentsByType(interactable, interactableType)
     return parents
 end
 
+function connections.getInterfaceByType(interactable, interactableType)
+    assertArgInteractable(1, interactable)
+    assertArg(2, interactableType, 'string')
+
+    interactableType = interactableType:lower()
+    interactable = getInteractable(interactable)
+
+    -- TODO Decide whether getParentsByType() must also be available for non-scripted objects
+    assert(interactable:getType() == 'scripted', 'This interactable is not scripted')
+
+    local part = getPartClass(interactable)
+    assert(part ~= nil, 'Could not find sm.interop data for this interactable')
+    assert(type(part.moddedConnectionInput) == 'table' and util.contains(part.moddedConnectionInput, type) ~= nil, 'Type "'.. interactableType ..'" is not in moddedConnectionInput for this interactable')
+
+    return getPartTypeInterface(getPartClass(interactable), interactableType)
+end
+
 function connections.getChildrenByType(interactable, interactableType)
     assertArgInteractable(1, interactable)
     assertArg(2, interactableType, 'string')
