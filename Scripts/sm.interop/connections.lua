@@ -271,9 +271,9 @@ function connections.getInterfaceByType(interactable, interactableType)
 
     local part = getPartClass(interactable)
     assert(part ~= nil, 'Could not find sm.interop data for this interactable')
-    assert(type(part.moddedConnectionInput) == 'table' and util.contains(part.moddedConnectionInput, type) ~= nil, 'Type "'.. interactableType ..'" is not in moddedConnectionInput for this interactable')
+    assert(type(part.moddedConnectionOutput) == 'table' and util.contains(part.moddedConnectionOutput, type) ~= nil, 'Type "'.. interactableType ..'" is not in moddedConnectionOutput for this interactable')
 
-    return getPartTypeInterface(getPartClass(interactable), interactableType)
+    return getPartTypeInterface(part, interactableType)
 end
 
 function connections.getChildrenByType(interactable, interactableType)
