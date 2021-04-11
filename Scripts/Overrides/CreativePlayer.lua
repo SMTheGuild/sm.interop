@@ -1,18 +1,20 @@
-function CreativePlayer.emitEvent(self, client, name, data)
+dofile '$CONTENT_e94ac99f-393e-4816-abe3-353435a1edf4/Scripts/Overrides/attach.lua'
+
+attachFunctionToObject(CreativePlayer, 'emitEvent', function(self, client, name, data)
     if sm.interop then
         sm.interop.events.emit('scrapmechanic:'..name, data, 'both', true)
     end
-end
+end)
 
-function CreativePlayer.client_onInteract( self, character, state )
+attachFunctionToObject(CreativePlayer, 'client_onInteract', function( self, character, state )
     self:emitEvent(true, 'playerInteract', {
         player = self.player,
         character = character,
         state = state
     })
-end
+end)
 
-function CreativePlayer.server_onProjectile( self, hitPos, hitTime, hitVelocity, projectileName, attacker, damage )
+attachFunctionToObject(CreativePlayer, 'server_onProjectile', function( self, hitPos, hitTime, hitVelocity, projectileName, attacker, damage )
     self:emitEvent(false, 'playerHitByProjectile', {
         player = self.player,
         hitPos = hitPos,
@@ -22,9 +24,9 @@ function CreativePlayer.server_onProjectile( self, hitPos, hitTime, hitVelocity,
         attacker = attacker,
         damage = damage
     })
-end
+end)
 
-function CreativePlayer.server_onMelee( self, hitPos, attacker, damage, power )
+attachFunctionToObject(CreativePlayer, 'server_onMelee', function( self, hitPos, attacker, damage, power )
     self:emitEvent(false, 'playerHitByMelee', {
         player = self.player,
         hitPos = hitPos,
@@ -32,36 +34,24 @@ function CreativePlayer.server_onMelee( self, hitPos, attacker, damage, power )
         damage = damge,
         power = power
     })
-end
+end)
 
-function CreativePlayer.server_onExplosion( self, center, destructionLevel )
+attachFunctionToObject(CreativePlayer, 'server_onExplosion', function( self, center, destructionLevel )
     self:emitEvent(false, 'playerHitByExplosion', {
         player = self.player,
         center = center,
         destructionLevel = destructionLevel
     })
-end
+end)
 
--- Disabled for performance reasons
--- function CreativePlayer.server_onCollision( self, other, collisionPosition, selfPointVelocity, otherPointVelocity, collisionNormal  )
---     self:emitEvent(false, 'playerCollision', {
---         player = self.player,
---         other = other,
---         collisionPosition = collisionPosition,
---         selfPointVelocity = selfPointVelocity,
---         otherPointVelocity = otherPointVelocity,
---         collisionNormal = collisionNormal
---     })
--- end
-
-function CreativePlayer.client_onCancel( self )
+attachFunctionToObject(CreativePlayer, 'client_onCancel', function( self )
     self:emitEvent(true, 'playerCancel', { player = self.player })
-end
+end)
 
-function CreativePlayer.client_onReload( self )
+attachFunctionToObject(CreativePlayer, 'client_onReload', function( self )
     self:emitEvent(true, 'playerReload', { player = self.player })
-end
+end)
 
-function CreativePlayer.server_onShapeRemoved( self, removedShapes )
+attachFunctionToObject(CreativePlayer, 'server_onShapeRemoved', function( self, removedShapes )
     self:emitEvent(false, 'shapeRemoved', { player = self.player, removedShapes = removedShapes })
-end
+end)

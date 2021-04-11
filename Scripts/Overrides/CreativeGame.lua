@@ -1,9 +1,6 @@
-local oldCreate = CreativeGame.client_onCreate
-local oldPlayerJoined = CreativeGame.server_onPlayerJoined
+dofile '$CONTENT_e94ac99f-393e-4816-abe3-353435a1edf4/Scripts/Overrides/attach.lua'
 
-function CreativeGame.client_onCreate(self)
-    oldCreate(self)
-
+attachFunctionToObject(CreativeGame, 'client_onCreate', function(self)
     -- Register /mod command
     local arguments = {
         { 'string', 'command', true }
@@ -18,11 +15,9 @@ function CreativeGame.client_onCreate(self)
     self.interop_newCommandArguments = nca
 
     sm.game.bindChatCommand('/mod', arguments, 'cl_onInteropCommand', 'Executes a mod command')
-end
+end)
 
-function CreativeGame.server_onPlayerJoined(self, player, newPlayer)
-    oldPlayerJoined(self, player, newPlayer)
-
+attachFunctionToObject(CreativeGame, 'server_onPlayerJoined', function(self, player, newPlayer)
     if sm.interop ~= nil then
         -- Load startup scripts for this person
         self.network:sendToClient(player, 'cl_interopLoadStartups', {
@@ -35,18 +30,18 @@ function CreativeGame.server_onPlayerJoined(self, player, newPlayer)
             newPlayer = newPlayer
         }, 'both', true)
     end
-end
+end)
 
-function CreativeGame.cl_interopLoadStartups(self, params)
+attachFunctionToObject(CreativeGame, 'cl_interopLoadStartups', function(self, params)
     sm.interop.startup.restoreStartupScripts(params.startupScripts)
     self.network:sendToServer('sv_interopLoadStartups', {})
-end
+end)
 
-function CreativeGame.sv_interopLoadStartups(self, params)
+attachFunctionToObject(CreativeGame, 'sv_interopLoadStartups', function(self, params)
     sm.interop.startup.startRunOldScripts()
-end
+end)
 
-function CreativeGame.client_onUpdate(self, dt)
+attachFunctionToObject(CreativeGame, 'client_onUpdate', function(self, dt)
     if sm.interop ~= nil then
         local toRegister = sm.interop.commands.getCommandsToRegister()
         if toRegister ~= nil then
@@ -57,9 +52,9 @@ function CreativeGame.client_onUpdate(self, dt)
             end
         end
     end
-end
+end)
 
-function CreativeGame.cl_onInteropCommand(self, params)
+attachFunctionToObject(CreativeGame, 'cl_onInteropCommand', function(self, params)
     if sm.interop == nil then
         sm.gui.chatMessage('#ff0000Error: #ffffffMod "sm.interop" is missing, or no part using the coremod has been placed in the world yet.')
         return
@@ -79,9 +74,9 @@ function CreativeGame.cl_onInteropCommand(self, params)
     if sm.interopGamefileModVersion < 3 then
         sm.gui.chatMessage('#ff0000Error: Due to a bug, custom mod commands do not work in custom creative worlds. You have to update sm.interop in order to fix this. Go to the sm.interop Steam Workshop page to read how to do this.')
     end
-end
+end)
 
-function CreativeGame.cl_onInteropCommand2(self, params)
+attachFunctionToObject(CreativeGame, 'cl_onInteropCommand2', function(self, params)
     if sm.interop == nil then
         sm.gui.chatMessage('#ff0000Error: #ffffffMod "sm.interop" is missing, or no part using the coremod has been placed in the world yet.')
         return
@@ -96,9 +91,9 @@ function CreativeGame.cl_onInteropCommand2(self, params)
     if sm.interopGamefileModVersion < 3 then
         sm.gui.chatMessage('#ff0000Error: Due to a bug, custom mod commands do not work in custom creative worlds. You have to update sm.interop in order to fix this. Go to the sm.interop Steam Workshop page to read how to do this.')
     end
-end
+end)
 
-function CreativeGame.sv_interopCommandExecute(self, params)
+attachFunctionToObject(CreativeGame, 'sv_interopCommandExecute', function(self, params)
     local world = params.player:getCharacter():getWorld()
     sm.event.sendToWorld(world, 'sv_interopCommandExecute', params)
-end
+end)
