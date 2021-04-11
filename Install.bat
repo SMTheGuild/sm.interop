@@ -58,12 +58,6 @@ IF NOT EXIST "%ScrapMechanicPath%" goto :enter
 
 :found
 ECHO Found Scrap Mechanic folder at: %ScrapMechanicPath%
-ECHO Checking game version...
-
-SET VersionPath=v0.4.5-b
-GOTO :install
-
-:install
 ECHO Installing sm.interop game files
 xcopy "GamefileMod" "%ScrapMechanicPath%" /y /s
 ECHO Game files installed!
