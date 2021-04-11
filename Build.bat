@@ -1,5 +1,10 @@
 @echo off > NUL
 
+echo Verifying game file integrity...
+start steam://validate/387990
+echo Wait until game files are verified
+pause
+
 REM Find Scrap Mechanic installation path
 for /f "tokens=*" %%i in ('.build\find_steam_path.bat') do set ScrapMechanicPath=%%i
 
