@@ -1,8 +1,8 @@
 .git
 Gamefilemod_src
 .gitattributes
+.build
 Build.bat
-buildexclude
 Workshop description.bb
 description_build.json
 description.json

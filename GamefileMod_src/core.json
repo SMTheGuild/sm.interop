@@ -1,11 +1,11 @@
-// sm.interop Modded Tool platform to load custom tools
-//
-// Target files:
-// - $GAME_DATA/Tools/ToolSets/core.json
-
 {
-    "uuid": "e74ff990-adac-434f-9967-bf9833d0bd69",
-    "previewRenderable": "$GAME_DATA/Character/Char_Tools/char_spudgun_preview.rend",
-    "previewRotation": [ 1, 0, 0, 0, 0, -1, 0, 1, 0 ],
-    "script": { "file": "$CONTENT_e94ac99f-393e-4816-abe3-353435a1edf4/Scripts/ModdedTool.lua", "class": "ModdedTool" },
+	"toolList":
+	[
+        {
+            "uuid": "e74ff990-adac-434f-9967-bf9833d0bd69",
+            "previewRenderable": "$GAME_DATA/Character/Char_Tools/char_spudgun_preview.rend",
+            "previewRotation": [ 1, 0, 0, 0, 0, -1, 0, 1, 0 ],
+            "script": { "file": "$CONTENT_e94ac99f-393e-4816-abe3-353435a1edf4/Scripts/ModdedTool.lua", "class": "ModdedTool" }
+        }
+    ]
 }
