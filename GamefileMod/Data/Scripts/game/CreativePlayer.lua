@@ -33,7 +33,19 @@ function CreativePlayer.server_onFixedUpdate( self, dt ) end
 
 function CreativePlayer.server_onProjectile( self, hitPos, hitTime, hitVelocity, projectileName, attacker, damage ) end
 
-function CreativePlayer.server_onMelee( self, hitPos, attacker, damage, power ) end
+function CreativePlayer.server_onMelee( self, hitPos, attacker, damage, power )
+	if not sm.exists( attacker ) then
+		return
+	end
+
+	if self.player.character and attacker.character then
+		local attackDirection = ( hitPos - attacker.character.worldPosition ):normalize()
+		-- Melee impulse
+		if attacker then
+			ApplyKnockback( self.player.character, attackDirection, power )
+		end
+	end
+end
 
 function CreativePlayer.server_onExplosion( self, center, destructionLevel ) end
 
@@ -51,7 +63,16 @@ function CreativePlayer.sv_e_eat( self, edibleParams ) end
 
 function CreativePlayer.sv_e_feed( self, params ) end
 
-function CreativePlayer.sv_e_setRefiningState( self, params ) end
+function CreativePlayer.sv_e_setRefiningState( self, params )
+	local userPlayer = params.user:getPlayer()
+	if userPlayer then
+		if params.state == true then
+			userPlayer:sendCharacterEvent( "refine" )
+		else
+			userPlayer:sendCharacterEvent( "refineEnd" )
+		end
+	end
+end
 
 function CreativePlayer.sv_e_onLoot( self, params ) end
 
@@ -72,5 +93,4 @@ function CreativePlayer.client_onCancel( self ) end
 function CreativePlayer.client_onReload( self ) end
 
 function CreativePlayer.server_onShapeRemoved( self, removedShapes ) end
-
 dofile '$CONTENT_e94ac99f-393e-4816-abe3-353435a1edf4/Scripts/Overrides/CreativePlayer.lua'

@@ -1,4 +1,5 @@
 local oldCreate = CreativeGame.client_onCreate
+local oldPlayerJoined = CreativeGame.server_onPlayerJoined
 
 function CreativeGame.client_onCreate(self)
     oldCreate(self)
@@ -19,7 +20,9 @@ function CreativeGame.client_onCreate(self)
     sm.game.bindChatCommand('/mod', arguments, 'cl_onInteropCommand', 'Executes a mod command')
 end
 
-function CreativeGame.server_onPlayerJoined( self, player, newPlayer )
+function CreativeGame.server_onPlayerJoined(self, player, newPlayer)
+    oldPlayerJoined(self, player, newPlayer)
+
     if sm.interop ~= nil then
         -- Load startup scripts for this person
         self.network:sendToClient(player, 'cl_interopLoadStartups', {
