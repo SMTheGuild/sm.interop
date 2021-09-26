@@ -1,15 +1,15 @@
 sm.interop.util = {}
 
 function sm.interop.util.getGamemode()
-    if sm.event.sendToGame('server_loadLevel', {}) then
-        return 'challenge'
+    if sm.event.sendToGame("cl_onClearConfirmButtonClick", {}) then
+        return "creative"
+    elseif sm.event.sendToGame("sv_e_setWarehouseRestrictions", {}) then
+        return "survival"
+    elseif sm.event.sendToGame("server_getLevelUuid", {}) then
+        return "challenge"
     end
 
-    if sm.event.sendToGame('sv_killPlayer', {}) then
-        return 'survival'
-    end
-
-    return 'creative'
+    return "unknown"
 end
 
 function sm.interop.util.clone(value, recursionLevel, scopeIndependentFunctions)
