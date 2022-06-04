@@ -40,7 +40,7 @@ jobs:
         uses: arma-actions/workshop-upload@v1
         with:
           appId: '387990'
-          itemId: '2143988698' # Id of item to update
+          itemId: '2123222134' # Id of item to update
           contentPath: 'dist'
           changelog: "[b]${{ github.event.release.name }}[/b] (${{ github.event.release.tag_name }})\n\n${{ github.event.release.body }}\n\n${{ github.event.release.html_url }}"
         env:
