@@ -1,5 +1,6 @@
 {
    "description" : "<-- Make sure to copy the description from \"Workshop description.bb\" after uploading the mod. -->",
+   "fileId" : 2123222134,
    "localId" : "e94ac99f-393e-4816-abe3-353435a1edf4",
    "name" : "sm.interop",
    "type" : "Blocks and Parts",
