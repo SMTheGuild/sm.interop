@@ -1,10 +1,13 @@
 .git
-Gamefilemod_src
+.github
+Cache
+GamefileMod_src
 .gitattributes
+.gitignore
 .build
+dist
 Build.bat
 Workshop description.bb
 description_build.json
-description.json
 preview source.xcf
 install.log

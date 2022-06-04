@@ -13,7 +13,7 @@ $oldObject = json_decode(file_get_contents($smJson), true);
 $addObject = json_decode(file_get_contents($addJson), true);
 $newObject = array_merge_recursive($oldObject, $addObject);
 
-$newJson = json_encode($newObject, JSON_PRETTY_PRINT);
+$newJson = json_encode($newObject, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
 file_put_contents(__DIR__.'/../Gamefilemod/Data/Tools/ToolSets/core.json', $newJson);
 

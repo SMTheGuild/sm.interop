@@ -2,7 +2,7 @@
     "toolList": [
         {
             "uuid": "8c7efc37-cd7c-4262-976e-39585f8527bf",
-            "previewRenderable": "$GAME_DATA\/Character\/Char_Tools\/char_connecttool_preview.rend",
+            "previewRenderable": "$GAME_DATA/Character/Char_Tools/char_connecttool_preview.rend",
             "previewRotation": [
                 1,
                 0,
@@ -18,7 +18,7 @@
         },
         {
             "uuid": "c60b9627-fc2b-4319-97c5-05921cb976c6",
-            "previewRenderable": "$GAME_DATA\/Character\/Char_Tools\/char_painttool_preview.rend",
+            "previewRenderable": "$GAME_DATA/Character/Char_Tools/char_painttool_preview.rend",
             "previewRotation": [
                 -1,
                 0,
@@ -34,7 +34,7 @@
         },
         {
             "uuid": "fdb8b8be-96e7-4de0-85c7-d2f42e4f33ce",
-            "previewRenderable": "$GAME_DATA\/Character\/Char_Tools\/char_weldtool_preview.rend",
+            "previewRenderable": "$GAME_DATA/Character/Char_Tools/char_weldtool_preview.rend",
             "previewRotation": [
                 1,
                 0,
@@ -50,7 +50,7 @@
         },
         {
             "uuid": "3384010e-bc1c-42bb-83ef-dbc78a1f9636",
-            "previewRenderable": "$GAME_DATA\/Character\/Char_Tools\/char_handbook_preview.rend",
+            "previewRenderable": "$GAME_DATA/Character/Char_Tools/char_handbook_preview.rend",
             "previewRotation": [
                 0,
                 0,
@@ -66,7 +66,7 @@
         },
         {
             "uuid": "e74ff990-adac-434f-9967-bf9833d0bd69",
-            "previewRenderable": "$GAME_DATA\/Character\/Char_Tools\/char_spudgun_preview.rend",
+            "previewRenderable": "$GAME_DATA/Character/Char_Tools/char_spudgun_preview.rend",
             "previewRotation": [
                 1,
                 0,
@@ -79,7 +79,7 @@
                 0
             ],
             "script": {
-                "file": "$CONTENT_e94ac99f-393e-4816-abe3-353435a1edf4\/Scripts\/ModdedTool.lua",
+                "file": "$CONTENT_e94ac99f-393e-4816-abe3-353435a1edf4/Scripts/ModdedTool.lua",
                 "class": "ModdedTool"
             }
         }

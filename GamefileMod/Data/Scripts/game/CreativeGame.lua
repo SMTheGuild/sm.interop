@@ -1,19 +1,42 @@
+dofile( "$SURVIVAL_DATA/Scripts/game/managers/EffectManager.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/game/managers/UnitManager.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/game/util/recipes.lua" )
+dofile( "$SURVIVAL_DATA/Scripts/game/survival_projectiles.lua" )
+dofile( "$SURVIVAL_DATA/Scripts/game/survival_meleeattacks.lua" )
 
 CreativeGame = class( nil )
 CreativeGame.enableLimitedInventory = false
 CreativeGame.enableRestrictions = true
 CreativeGame.enableFuelConsumption = false
 CreativeGame.enableAmmoConsumption = false
-CreativeGame.enableUpgradeCost = true
-
-g_godMode = true
-g_disableScrapHarvest = true
+CreativeGame.enableUpgrade = true
 
 function CreativeGame.server_onCreate( self )
 	g_unitManager = UnitManager()
 	g_unitManager:sv_onCreate( nil, { aggroCreations = true } )
+
+	self.sv = {}
+	self.sv.saved = self.storage:load()
+
+	
+	if self.sv.saved == nil then
+		local legacyCreativeWorld = sm.world.getLegacyCreativeWorld()
+		if legacyCreativeWorld then
+			self.sv.saved = {}
+			self.sv.saved.data = self.data
+			self.sv.saved.world = legacyCreativeWorld
+			self.storage:save( self.sv.saved )
+		else
+			self.sv.saved = {}
+			self.sv.saved.data = self.data
+			self.sv.saved.world = sm.world.createWorld( self.worldScriptFilename, self.worldScriptClass, { worldFile = self.data.worldFile }, self.data.seed )
+			self.storage:save( self.sv.saved )
+		end
+	end
+
+	if not sm.exists( self.sv.saved.world ) then
+		sm.world.loadWorld( self.sv.saved.world )
+	end
 
 	local time = sm.storage.load( STORAGE_CHANNEL_TIME )
 	if time then
@@ -28,6 +51,9 @@ function CreativeGame.server_onCreate( self )
 	self.network:setClientData( { time = time.timeOfDay } )
 
 	self:loadCraftingRecipes()
+	g_godMode = true
+	g_disableScrapHarvest = true
+
 end
 
 function CreativeGame.loadCraftingRecipes( self )
@@ -41,7 +67,17 @@ function CreativeGame.server_onFixedUpdate( self, timeStep )
 end
 
 function CreativeGame.server_onPlayerJoined( self, player, newPlayer )
-	g_unitManager:sv_onPlayerJoined( player )
+	if newPlayer then
+		self.sv.saved.world:loadCell( 0, 0, player, "sv_createNewPlayer" )
+	else
+		g_unitManager:sv_onPlayerJoined( player )
+	end
+
+end
+
+function CreativeGame.sv_createNewPlayer( self, world, x, y, player )
+	local params = { player = player, x = x, y = y }
+	sm.event.sendToWorld( self.sv.saved.world, "sv_e_spawnNewCharacter", params )
 end
 
 function CreativeGame.client_onCreate( self )
@@ -72,6 +108,9 @@ function CreativeGame.client_onCreate( self )
 		g_unitManager = UnitManager()
 	end
 	g_unitManager:cl_onCreate()
+
+	g_effectManager = EffectManager()
+	g_effectManager:cl_onCreate()
 end
 
 function CreativeGame.client_onClientDataUpdate( self, clientData )
@@ -179,5 +218,21 @@ function CreativeGame.sv_n_onChatCommand( self, params, player )
 		end
 	end
 end
-sm.interopGamefileModVersion = 4
+
+CreativeFlatGame = class( CreativeGame )
+CreativeFlatGame.worldScriptFilename = "$GAME_DATA/Scripts/game/worlds/CreativeFlatWorld.lua";
+CreativeFlatGame.worldScriptClass = "CreativeFlatWorld";
+
+ClassicCreativeGame = class( CreativeGame )
+ClassicCreativeGame.worldScriptFilename = "$GAME_DATA/Scripts/game/worlds/ClassicCreativeTerrainWorld.lua";
+ClassicCreativeGame.worldScriptClass = "ClassicCreativeTerrainWorld";
+
+CreativeCustomGame = class( CreativeGame )
+CreativeCustomGame.worldScriptFilename = "$GAME_DATA/Scripts/game/worlds/CreativeCustomWorld.lua";
+CreativeCustomGame.worldScriptClass = "CreativeCustomWorld";
+
+CreativeTerrainGame = class( CreativeGame )
+CreativeTerrainGame.worldScriptFilename = "$GAME_DATA/Scripts/game/worlds/CreativeTerrainWorld.lua";
+CreativeTerrainGame.worldScriptClass = "CreativeTerrainWorld";
+sm.interopGamefileModVersion = 5
 dofile '$CONTENT_e94ac99f-393e-4816-abe3-353435a1edf4/Scripts/Overrides/CreativeGame.lua'
