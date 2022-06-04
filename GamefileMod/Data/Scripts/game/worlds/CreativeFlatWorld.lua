@@ -2,13 +2,14 @@ dofile( "$GAME_DATA/Scripts/game/worlds/CreativeBaseWorld.lua")
 
 CreativeFlatWorld = class( CreativeBaseWorld )
 
-CreativeFlatWorld.terrainScript = "$GAME_DATA/Scripts/game/terrain/terrain_flat.lua"
+CreativeFlatWorld.terrainScript = "$GAME_DATA/Scripts/terrain/terrain_flat.lua"
 CreativeFlatWorld.enableSurface = true
 CreativeFlatWorld.enableAssets = true
 CreativeFlatWorld.enableClutter = true
-CreativeFlatWorld.enableCreations = false
 CreativeFlatWorld.enableNodes = false
+CreativeFlatWorld.enableCreations = false
 CreativeFlatWorld.enableHarvestables = false
+CreativeFlatWorld.enableKinematics = false
 CreativeFlatWorld.groundMaterialSet = "$GAME_DATA/Terrain/Materials/gnd_flat_materialset.json"
 CreativeFlatWorld.cellMinX = -16
 CreativeFlatWorld.cellMaxX = 15
