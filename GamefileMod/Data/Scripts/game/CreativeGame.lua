@@ -122,6 +122,11 @@ function CreativeGame.client_showMessage( self, params )
 	sm.gui.chatMessage( params )
 end
 
+
+function CreativeGame.client_onLoadingScreenLifted( self )
+	g_effectManager:cl_onLoadingScreenLifted()
+end
+
 function CreativeGame.cl_onClearConfirmButtonClick( self, name )
 	if name == "Yes" then
 		self.cl.confirmClearGui:close()

@@ -1,12 +1,13 @@
 @echo off > NUL
 
 echo Verifying game file integrity...
-start steam://validate/387990
+@REM start steam://validate/387990
 echo Wait until game files are verified
 pause
 
 REM Find Scrap Mechanic installation path
-for /f "tokens=*" %%i in ('.build\find_steam_path.bat') do set ScrapMechanicPath=%%i
+@REM for /f "tokens=*" %%i in ('.build\find_steam_path.bat') do set ScrapMechanicPath=%%i
+set ScrapMechanicPath=D:\SteamLibrary\steamapps\common\Scrap Mechanic
 
 REM Run scripts that merge new content with Scrap Mechanic
 php .build\merge_iconmaps.php "%ScrapMechanicPath%"
